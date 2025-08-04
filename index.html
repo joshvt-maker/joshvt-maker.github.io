@@ -284,6 +284,88 @@
             margin-bottom: 1rem;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal-content h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .modal-content p {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .modal-content input:focus,
+        .modal-content textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -315,8 +397,8 @@
                 <h1>Sell Your Car Fast</h1>
                 <p>Or Let Me Do It For You</p>
                 <div class="cta-buttons">
-                    <a href="#diy" class="btn btn-primary">Get DIY Guide</a>
-                    <a href="#done-for-you" class="btn btn-secondary">Let Me Handle It</a>
+                    <a href="#diy" class="btn btn-primary email-btn" data-service="DIY Guide">Get DIY Guide</a>
+                    <a href="#done-for-you" class="btn btn-secondary email-btn" data-service="Done-For-You Service">Let Me Handle It</a>
                 </div>
             </div>
         </div>
@@ -337,7 +419,7 @@
                         <li>How to price competitively</li>
                         <li>Proven scam avoidance tactics</li>
                     </ul>
-                    <a href="#pricing" class="btn btn-primary">Get Guide Now</a>
+                    <a href="#pricing" class="btn btn-primary email-btn" data-service="DIY Guide">Get Guide Now</a>
                 </div>
 
                 <div class="option-card" id="done-for-you">
@@ -350,7 +432,7 @@
                         <li>You approve final price before sale</li>
                         <li>Only pay when it's sold</li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary">Book Service</a>
+                    <a href="#contact" class="btn btn-primary email-btn" data-service="Done-For-You Service">Book Service</a>
                 </div>
             </div>
         </div>
@@ -440,10 +522,30 @@
                     <li>No sale = no payment</li>
                     <li>You approve final price</li>
                 </ul>
-                <a href="#contact" class="btn btn-secondary">Book Now</a>
+                <a href="#contact" class="btn btn-secondary email-btn" data-service="Done-For-You Service">Book Now</a>
             </div>
         </div>
     </section>
+
+    <!-- Email Modal -->
+    <div id="emailModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalTitle">Get Started Today</h3>
+            <p id="modalDescription">Enter your email and I'll send you the details!</p>
+            <form id="emailForm" action="https://formspree.io/f/mblkzdgk" method="POST">
+                <input type="hidden" id="serviceType" name="service_type" value="">
+                <input type="email" name="email" placeholder="Enter your email address" required>
+                <input type="text" name="name" placeholder="Your name (optional)">
+                <textarea name="message" placeholder="Tell me about your car or what you need help with (optional)" rows="3"></textarea>
+                <button type="submit" class="btn btn-primary">Send Me Details</button>
+            </form>
+            <div id="thankYou" style="display: none;">
+                <h3>Thank You!</h3>
+                <p>I'll get back to you within 24 hours with all the details.</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer" id="contact">
@@ -453,8 +555,8 @@
                 <p>Visit <strong>inclinecarsales.com</strong></p>
                 <p>DM <strong>@InclineAuto</strong></p>
                 <div style="margin-top: 2rem;">
-                    <a href="#" class="btn btn-primary">Download Free Guide</a>
-                    <a href="#" class="btn btn-secondary" style="margin-left: 1rem;">Get Premium ($49)</a>
+                    <a href="#" class="btn btn-primary email-btn" data-service="Free DIY Guide">Download Free Guide</a>
+                    <a href="#" class="btn btn-secondary email-btn" data-service="Premium Guide ($49)" style="margin-left: 1rem;">Get Premium ($49)</a>
                 </div>
             </div>
             <p style="margin-top: 2rem; opacity: 0.7;">&copy; 2025 Incline Car Sales. All rights reserved.</p>
@@ -462,8 +564,84 @@
     </footer>
 
     <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        // Modal functionality
+        const modal = document.getElementById('emailModal');
+        const emailButtons = document.querySelectorAll('.email-btn');
+        const closeBtn = document.querySelector('.close');
+        const emailForm = document.getElementById('emailForm');
+        const thankYou = document.getElementById('thankYou');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDescription = document.getElementById('modalDescription');
+        const serviceTypeInput = document.getElementById('serviceType');
+
+        // Open modal when any email button is clicked
+        emailButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const service = this.getAttribute('data-service');
+                serviceTypeInput.value = service;
+                
+                // Customize modal content based on service
+                if (service.includes('DIY')) {
+                    modalTitle.textContent = 'Get Your DIY Car Selling Guide';
+                    modalDescription.textContent = 'Enter your email and I\'ll send you the complete guide with all my pro tips!';
+                } else if (service.includes('Done-For-You')) {
+                    modalTitle.textContent = 'Let Me Sell Your Car';
+                    modalDescription.textContent = 'Tell me about your car and I\'ll handle everything for you!';
+                } else {
+                    modalTitle.textContent = 'Get Started Today';
+                    modalDescription.textContent = 'Enter your details and I\'ll send you everything you need!';
+                }
+                
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            emailForm.style.display = 'block';
+            thankYou.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                emailForm.style.display = 'block';
+                thankYou.style.display = 'none';
+            }
+        });
+
+        // Handle form submission
+        emailForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Submit to Formspree
+            fetch(emailForm.action, {
+                method: 'POST',
+                body: new FormData(emailForm),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    emailForm.style.display = 'none';
+                    thankYou.style.display = 'block';
+                    emailForm.reset();
+                } else {
+                    alert('Sorry, there was an error. Please try again or email me directly.');
+                }
+            }).catch(error => {
+                alert('Sorry, there was an error. Please try again or email me directly.');
+            });
+        });
+
+        // Smooth scrolling for anchor links (existing code)
+        document.querySelectorAll('a[href^="#"]:not(.email-btn)').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
