@@ -397,8 +397,8 @@
                 <h1>Sell Your Car Fast</h1>
                 <p>Or Let Me Do It For You</p>
                 <div class="cta-buttons">
-                    <a href="#diy" class="btn btn-primary email-btn" data-service="DIY Guide">Get DIY Guide</a>
-                    <a href="#done-for-you" class="btn btn-secondary email-btn" data-service="Done-For-You Service">Let Me Handle It</a>
+                    <button class="btn btn-primary email-btn" data-service="DIY Guide">Get DIY Guide</button>
+                    <button class="btn btn-secondary email-btn" data-service="Done-For-You Service">Let Me Handle It</button>
                 </div>
             </div>
         </div>
@@ -419,7 +419,7 @@
                         <li>How to price competitively</li>
                         <li>Proven scam avoidance tactics</li>
                     </ul>
-                    <a href="#pricing" class="btn btn-primary email-btn" data-service="DIY Guide">Get Guide Now</a>
+                    <button class="btn btn-primary email-btn" data-service="DIY Guide">Get Guide Now</button>
                 </div>
 
                 <div class="option-card" id="done-for-you">
@@ -432,7 +432,7 @@
                         <li>You approve final price before sale</li>
                         <li>Only pay when it's sold</li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary email-btn" data-service="Done-For-You Service">Book Service</a>
+                    <button class="btn btn-primary email-btn" data-service="Done-For-You Service">Book Service</button>
                 </div>
             </div>
         </div>
@@ -522,7 +522,7 @@
                     <li>No sale = no payment</li>
                     <li>You approve final price</li>
                 </ul>
-                <a href="#contact" class="btn btn-secondary email-btn" data-service="Done-For-You Service">Book Now</a>
+                <button class="btn btn-secondary email-btn" data-service="Done-For-You Service">Book Now</button>
             </div>
         </div>
     </section>
@@ -555,8 +555,8 @@
                 <p>Visit <strong>inclinecarsales.com</strong></p>
                 <p>DM <strong>@InclineAuto</strong></p>
                 <div style="margin-top: 2rem;">
-                    <a href="#" class="btn btn-primary email-btn" data-service="Free DIY Guide">Download Free Guide</a>
-                    <a href="#" class="btn btn-secondary email-btn" data-service="Premium Guide ($49)" style="margin-left: 1rem;">Get Premium ($49)</a>
+                    <button class="btn btn-primary email-btn" data-service="Free DIY Guide">Download Free Guide</button>
+                    <button class="btn btn-secondary email-btn" data-service="Premium Guide ($49)" style="margin-left: 1rem;">Get Premium ($49)</button>
                 </div>
             </div>
             <p style="margin-top: 2rem; opacity: 0.7;">&copy; 2025 Incline Car Sales. All rights reserved.</p>
@@ -564,117 +564,125 @@
     </footer>
 
     <script>
-        // Modal functionality
-        const modal = document.getElementById('emailModal');
-        const emailButtons = document.querySelectorAll('.email-btn');
-        const closeBtn = document.querySelector('.close');
-        const emailForm = document.getElementById('emailForm');
-        const thankYou = document.getElementById('thankYou');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalDescription = document.getElementById('modalDescription');
-        const serviceTypeInput = document.getElementById('serviceType');
-
-        // Open modal when any email button is clicked
-        emailButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const service = this.getAttribute('data-service');
-                serviceTypeInput.value = service;
-                
-                // Customize modal content based on service
-                if (service.includes('DIY')) {
-                    modalTitle.textContent = 'Get Your DIY Car Selling Guide';
-                    modalDescription.textContent = 'Enter your email and I\'ll send you the complete guide with all my pro tips!';
-                } else if (service.includes('Done-For-You')) {
-                    modalTitle.textContent = 'Let Me Sell Your Car';
-                    modalDescription.textContent = 'Tell me about your car and I\'ll handle everything for you!';
-                } else {
-                    modalTitle.textContent = 'Get Started Today';
-                    modalDescription.textContent = 'Enter your details and I\'ll send you everything you need!';
-                }
-                
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            });
-        });
-
-        // Close modal
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            emailForm.style.display = 'block';
-            thankYou.style.display = 'none';
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                emailForm.style.display = 'block';
-                thankYou.style.display = 'none';
-            }
-        });
-
-        // Handle form submission
-        emailForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Wait for page to fully load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, initializing email modal...');
             
-            // Submit to Formspree
-            fetch(emailForm.action, {
-                method: 'POST',
-                body: new FormData(emailForm),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    emailForm.style.display = 'none';
-                    thankYou.style.display = 'block';
-                    emailForm.reset();
-                } else {
-                    alert('Sorry, there was an error. Please try again or email me directly.');
-                }
-            }).catch(error => {
-                alert('Sorry, there was an error. Please try again or email me directly.');
-            });
-        });
+            // Get elements
+            const modal = document.getElementById('emailModal');
+            const emailButtons = document.querySelectorAll('.email-btn');
+            const closeBtn = document.querySelector('.close');
+            const emailForm = document.getElementById('emailForm');
+            const thankYou = document.getElementById('thankYou');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const serviceTypeInput = document.getElementById('serviceType');
 
-        // Smooth scrolling for anchor links (existing code)
-        document.querySelectorAll('a[href^="#"]:not(.email-btn)').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+            console.log('Found', emailButtons.length, 'email buttons');
+
+            // Add click handlers to all email buttons
+            emailButtons.forEach(function(button, index) {
+                console.log('Adding handler to button', index, button.textContent);
+                
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Button clicked!', this.getAttribute('data-service'));
+                    
+                    const service = this.getAttribute('data-service');
+                    serviceTypeInput.value = service;
+                    
+                    // Customize modal content based on service
+                    if (service && service.includes('DIY')) {
+                        modalTitle.textContent = 'Get Your DIY Car Selling Guide';
+                        modalDescription.textContent = 'Enter your email and I\'ll send you the complete guide with all my pro tips!';
+                    } else if (service && service.includes('Done-For-You')) {
+                        modalTitle.textContent = 'Let Me Sell Your Car';
+                        modalDescription.textContent = 'Tell me about your car and I\'ll handle everything for you!';
+                    } else {
+                        modalTitle.textContent = 'Get Started Today';
+                        modalDescription.textContent = 'Enter your details and I\'ll send you everything you need!';
+                    }
+                    
+                    // Show modal
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                    console.log('Modal should be visible now');
+                });
+            });
+
+            // Close modal when X is clicked
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    console.log('Close button clicked');
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    emailForm.style.display = 'block';
+                    thankYou.style.display = 'none';
+                });
+            }
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    console.log('Clicked outside modal');
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    emailForm.style.display = 'block';
+                    thankYou.style.display = 'none';
+                }
+            });
+
+            // Handle form submission
+            if (emailForm) {
+                emailForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    console.log('Form submitted');
+                    
+                    // Submit to Formspree
+                    fetch(emailForm.action, {
+                        method: 'POST',
+                        body: new FormData(emailForm),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    }).then(function(response) {
+                        console.log('Form response:', response);
+                        if (response.ok) {
+                            emailForm.style.display = 'none';
+                            thankYou.style.display = 'block';
+                            emailForm.reset();
+                        } else {
+                            alert('Sorry, there was an error. Please try again or email me directly.');
+                        }
+                    }).catch(function(error) {
+                        console.log('Form error:', error);
+                        alert('Sorry, there was an error. Please try again or email me directly.');
                     });
-                }
+                });
+            }
+
+            // Add scroll-triggered animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards and sections
+            document.querySelectorAll('.option-card, .step-card, .testimonial').forEach(function(el) {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
             });
-        });
-
-        // Add scroll-triggered animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all cards and sections
-        document.querySelectorAll('.option-card, .step-card, .testimonial').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
         });
     </script>
 </body>
