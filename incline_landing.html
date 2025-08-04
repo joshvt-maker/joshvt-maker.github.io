@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incline: Sell Your Car Fast — Or Let Me Do It For You</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .features {
+            background: white;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .option-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px);
+            border-color: #667eea;
+        }
+
+        .option-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .option-card p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #6c757d;
+        }
+
+        .checklist {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+            color: #495057;
+        }
+
+        .checklist li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .diy-steps {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .step-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-card h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ecf0f1;
+        }
+
+        .step-features {
+            list-style: none;
+        }
+
+        .step-features li {
+            padding: 0.3rem 0;
+            opacity: 0.9;
+        }
+
+        .testimonials {
+            background: #f8f9fa;
+            padding: 80px 0;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #495057;
+            margin-bottom: 1rem;
+        }
+
+        .pricing {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .pricing-card {
+            background: rgba(255,255,255,0.15);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .pricing h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            margin-bottom: 2rem;
+        }
+
+        .footer h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Sell Your Car Fast</h1>
+                <p>Or Let Me Do It For You</p>
+                <div class="cta-buttons">
+                    <a href="#diy" class="btn btn-primary">Get DIY Guide</a>
+                    <a href="#done-for-you" class="btn btn-secondary">Let Me Handle It</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Choose Your Path</h2>
+            <div class="options-grid">
+                <div class="option-card" id="diy">
+                    <h3>🛠️ DIY Car Selling Guide</h3>
+                    <p>Use my complete walkthrough to sell your car yourself the smart way.</p>
+                    <ul class="checklist">
+                        <li>Everything you need to know</li>
+                        <li>What to say to buyers</li>
+                        <li>Where to list for maximum exposure</li>
+                        <li>How to price competitively</li>
+                        <li>Proven scam avoidance tactics</li>
+                    </ul>
+                    <a href="#pricing" class="btn btn-primary">Get Guide Now</a>
+                </div>
+
+                <div class="option-card" id="done-for-you">
+                    <h3>🔑 Done-For-You Service</h3>
+                    <p>Too much hassle? I'll take over and sell your car for you.</p>
+                    <ul class="checklist">
+                        <li>I handle everything from start to finish</li>
+                        <li>Deal with all buyer inquiries</li>
+                        <li>Professional photography & listings</li>
+                        <li>You approve final price before sale</li>
+                        <li>Only pay when it's sold</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Book Service</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIY Steps -->
+    <section class="diy-steps">
+        <div class="container">
+            <h2 class="section-title">Complete DIY Walkthrough</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <h4>🧽 Prep Your Car to Sell</h4>
+                    <ul class="step-features">
+                        <li>Deep clean checklist</li>
+                        <li>Quick fixes that increase value</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <h4>💰 Price It Right</h4>
+                    <ul class="step-features">
+                        <li>KBB + Marketplace tool guide</li>
+                        <li>Price negotiation script</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <h4>📸 Take Winning Photos</h4>
+                    <ul class="step-features">
+                        <li>5 best angles revealed</li>
+                        <li>Free photo editing app guide</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <h4>✍️ Write a Listing That Converts</h4>
+                    <ul class="step-features">
+                        <li>Proven listing templates</li>
+                        <li>Words that boost trust</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <h4>🌐 Post It Where It Sells</h4>
+                    <ul class="step-features">
+                        <li>Platform breakdown: FB, Craigslist, etc.</li>
+                        <li>Optimal posting timing strategy</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <h4>🤝 Close the Sale Safely</h4>
+                    <ul class="step-features">
+                        <li>How to get paid without risk</li>
+                        <li>Title & bill of sale walkthrough</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What People Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p>"Jose sold my car in 3 days for $2,000 more than the dealer offered. I barely lifted a finger."</p>
+                </div>
+                <div class="testimonial">
+                    <p>"The DIY kit helped me post my car that same night. I felt like I had a playbook."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Get Started Today</h2>
+            <div class="pricing-card">
+                <h3>Done-For-You Service</h3>
+                <div class="price">$0</div>
+                <p>Upfront Payment</p>
+                <ul class="checklist" style="text-align: left; color: white;">
+                    <li>Flat fee or % of sale (you choose)</li>
+                    <li>No sale = no payment</li>
+                    <li>You approve final price</li>
+                </ul>
+                <a href="#contact" class="btn btn-secondary">Book Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <h4>Ready to Get Started?</h4>
+                <p>Visit <strong>inclinecarsales.com</strong></p>
+                <p>DM <strong>@InclineAuto</strong></p>
+                <div style="margin-top: 2rem;">
+                    <a href="#" class="btn btn-primary">Download Free Guide</a>
+                    <a href="#" class="btn btn-secondary" style="margin-left: 1rem;">Get Premium ($49)</a>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.7;">&copy; 2025 Incline Car Sales. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.option-card, .step-card, .testimonial').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
