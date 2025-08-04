@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Incline: Sell Your Car Fast — Or Let Me Do It For You</title>
+    <title>Incline: Premium Car Sales Solutions</title>
     <style>
         * {
             margin: 0;
@@ -12,10 +12,10 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: "Times New Roman", Times, serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #2c2c2c;
+            background: #f8f9fa;
             overflow-x: hidden;
         }
 
@@ -30,8 +30,10 @@
             display: flex;
             align-items: center;
             text-align: center;
-            color: white;
+            color: #2c2c2c;
             position: relative;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+            color: #ffffff;
         }
 
         .hero::before {
@@ -41,168 +43,199 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.1);
             z-index: 1;
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            animation: fadeInUp 1s ease-out;
+            animation: fadeInUp 1.2s ease-out;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
+            font-size: clamp(4rem, 7vw, 6.5rem);
+            font-weight: 400;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: none;
+            letter-spacing: 0.15em;
+            font-family: "Times New Roman", Times, serif;
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
+        .hero .subtitle {
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 300;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            font-style: normal;
+            letter-spacing: 0.05em;
+            color: #e8e8e8;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 2rem;
             justify-content: center;
             flex-wrap: wrap;
             margin-bottom: 3rem;
         }
 
         .btn {
-            padding: 16px 32px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            padding: 18px 40px;
+            border: 2px solid #ffffff;
+            border-radius: 0;
+            font-size: 1rem;
+            font-weight: 400;
             text-decoration: none;
             display: inline-block;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             cursor: pointer;
             text-align: center;
-            min-width: 200px;
+            min-width: 220px;
+            font-family: "Times New Roman", Times, serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            background: #ffffff;
+            color: #2c2c2c;
+            box-shadow: none;
         }
 
         .btn-secondary {
-            background: rgba(255,255,255,0.15);
-            color: white;
-            border: 2px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(10px);
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-primary:hover {
+            background: #f0f0f0;
+            color: #1a1a1a;
+        }
+
+        .btn-secondary:hover {
+            background: #ffffff;
+            color: #2c2c2c;
         }
 
         .features {
-            background: white;
-            padding: 80px 0;
+            background: #ffffff;
+            padding: 100px 0;
             position: relative;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            color: #2c3e50;
+            font-size: 2.8rem;
+            font-weight: 400;
+            margin-bottom: 4rem;
+            color: #2c2c2c;
+            font-family: "Times New Roman", Times, serif;
+            letter-spacing: 0.05em;
         }
 
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 4rem;
             margin-bottom: 4rem;
         }
 
         .option-card {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: #ffffff;
+            padding: 3rem;
+            border-radius: 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
             transition: transform 0.3s ease;
-            border: 3px solid transparent;
+            border: 1px solid #e8e8e8;
         }
 
         .option-card:hover {
-            transform: translateY(-10px);
-            border-color: #667eea;
+            transform: translateY(-5px);
+            border-color: #2c2c2c;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
         }
 
         .option-card h3 {
             font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #2c3e50;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: #2c2c2c;
+            font-family: "Times New Roman", Times, serif;
+            letter-spacing: 0.05em;
         }
 
         .option-card p {
             font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: #6c757d;
+            margin-bottom: 2rem;
+            color: #666666;
+            line-height: 1.7;
         }
 
         .checklist {
             list-style: none;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .checklist li {
-            padding: 0.5rem 0;
+            padding: 0.8rem 0;
             position: relative;
             padding-left: 2rem;
-            color: #495057;
+            color: #555555;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
         }
 
         .checklist li::before {
-            content: '✓';
+            content: '●';
             position: absolute;
             left: 0;
-            color: #28a745;
-            font-weight: bold;
-            font-size: 1.2rem;
+            color: #2c2c2c;
+            font-weight: normal;
+            font-size: 1rem;
         }
 
         .diy-steps {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            padding: 80px 0;
+            background: #f8f9fa;
+            color: #2c2c2c;
+            padding: 100px 0;
         }
 
         .steps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
         }
 
         .step-card {
-            background: rgba(255,255,255,0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 0;
+            border: 1px solid #e8e8e8;
             transition: transform 0.3s ease;
         }
 
         .step-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
 
         .step-card h4 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #ecf0f1;
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: #2c2c2c;
+            font-family: "Times New Roman", Times, serif;
+            letter-spacing: 0.05em;
         }
 
         .step-features {
@@ -210,78 +243,90 @@
         }
 
         .step-features li {
-            padding: 0.3rem 0;
-            opacity: 0.9;
+            padding: 0.5rem 0;
+            color: #666666;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .step-features li:last-child {
+            border-bottom: none;
         }
 
         .testimonials {
-            background: #f8f9fa;
-            padding: 80px 0;
+            background: #ffffff;
+            padding: 100px 0;
         }
 
         .testimonial-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
         }
 
         .testimonial {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+            padding: 3rem;
+            border-radius: 0;
+            box-shadow: none;
+            border-left: 3px solid #2c2c2c;
         }
 
         .testimonial p {
             font-style: italic;
             font-size: 1.1rem;
-            color: #495057;
+            color: #555555;
             margin-bottom: 1rem;
+            line-height: 1.7;
         }
 
         .pricing {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            background: #2c2c2c;
             color: white;
-            padding: 80px 0;
+            padding: 100px 0;
             text-align: center;
         }
 
         .pricing-card {
-            background: rgba(255,255,255,0.15);
-            padding: 3rem;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            padding: 4rem;
+            border-radius: 0;
+            border: 1px solid rgba(255,255,255,0.1);
             max-width: 500px;
             margin: 0 auto;
         }
 
         .pricing h3 {
             font-size: 2rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            font-family: "Times New Roman", Times, serif;
+            font-weight: 400;
+            letter-spacing: 0.05em;
         }
 
         .price {
-            font-size: 3rem;
-            font-weight: 800;
-            margin: 1rem 0;
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin: 2rem 0;
+            font-family: "Times New Roman", Times, serif;
         }
 
         .footer {
-            background: #2c3e50;
+            background: #1a1a1a;
             color: white;
-            padding: 60px 0 30px;
+            padding: 80px 0 40px;
             text-align: center;
         }
 
         .footer-content {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .footer h4 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            font-family: "Times New Roman", Times, serif;
+            font-weight: 400;
+            letter-spacing: 0.05em;
         }
 
         /* Modal Styles */
@@ -293,72 +338,78 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
         }
 
         .modal-content {
             background: white;
             margin: 5% auto;
-            padding: 2rem;
-            border-radius: 20px;
+            padding: 3rem;
+            border-radius: 0;
             width: 90%;
             max-width: 500px;
             position: relative;
-            animation: modalSlideIn 0.3s ease-out;
+            animation: modalSlideIn 0.4s ease-out;
+            border: 1px solid #e8e8e8;
         }
 
         .close {
             color: #aaa;
             float: right;
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 24px;
+            font-weight: normal;
             cursor: pointer;
             position: absolute;
-            top: 15px;
-            right: 20px;
+            top: 20px;
+            right: 25px;
         }
 
         .close:hover {
-            color: #000;
+            color: #2c2c2c;
         }
 
         .modal-content h3 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
+            color: #2c2c2c;
+            margin-bottom: 1.5rem;
             font-size: 1.8rem;
+            font-family: "Times New Roman", Times, serif;
+            font-weight: 400;
+            letter-spacing: 0.05em;
         }
 
         .modal-content p {
-            color: #6c757d;
-            margin-bottom: 1.5rem;
+            color: #666666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
         }
 
         .modal-content form {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .modal-content input,
         .modal-content textarea {
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #e8e8e8;
+            border-radius: 0;
             font-size: 1rem;
             transition: border-color 0.3s ease;
+            font-family: "Times New Roman", Times, serif;
         }
 
         .modal-content input:focus,
         .modal-content textarea:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #2c2c2c;
         }
 
         @keyframes modalSlideIn {
             from {
                 opacity: 0;
-                transform: translateY(-50px);
+                transform: translateY(-30px);
             }
             to {
                 opacity: 1;
@@ -369,12 +420,17 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        /* Remove emojis and make it more professional */
+        .emoji {
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -385,6 +441,15 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -394,11 +459,11 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Sell Your Car Fast</h1>
-                <p>Or Let Me Do It For You</p>
+                <h1>INCLINE</h1>
+                <p class="subtitle">Sell Your Car for What It's Worth</p>
                 <div class="cta-buttons">
-                    <button class="btn btn-primary email-btn" data-service="DIY Guide">Get DIY Guide</button>
-                    <button class="btn btn-secondary email-btn" data-service="Done-For-You Service">Let Me Handle It</button>
+                    <button class="btn btn-primary email-btn" data-service="DIY Guide">Professional Guide</button>
+                    <button class="btn btn-secondary email-btn" data-service="Done-For-You Service">Full Service</button>
                 </div>
             </div>
         </div>
@@ -407,32 +472,32 @@
     <!-- How It Works -->
     <section class="features">
         <div class="container">
-            <h2 class="section-title">Choose Your Path</h2>
+            <h2 class="section-title">Our Services</h2>
             <div class="options-grid">
                 <div class="option-card" id="diy">
-                    <h3>🛠️ DIY Car Selling Guide</h3>
-                    <p>Use my complete walkthrough to sell your car yourself the smart way.</p>
+                    <h3>Professional Car Selling Guide</h3>
+                    <p>A comprehensive methodology developed through years of experience in automotive sales, providing you with institutional-grade knowledge and strategies.</p>
                     <ul class="checklist">
-                        <li>Everything you need to know</li>
-                        <li>What to say to buyers</li>
-                        <li>Where to list for maximum exposure</li>
-                        <li>How to price competitively</li>
-                        <li>Proven scam avoidance tactics</li>
+                        <li>Complete market analysis framework</li>
+                        <li>Professional negotiation strategies</li>
+                        <li>Multi-platform listing optimization</li>
+                        <li>Competitive pricing methodologies</li>
+                        <li>Risk mitigation and fraud prevention</li>
                     </ul>
-                    <button class="btn btn-primary email-btn" data-service="DIY Guide">Get Guide Now</button>
+                    <button class="btn btn-primary email-btn" data-service="DIY Guide">Request Guide</button>
                 </div>
 
                 <div class="option-card" id="done-for-you">
-                    <h3>🔑 Done-For-You Service</h3>
-                    <p>Too much hassle? I'll take over and sell your car for you.</p>
+                    <h3>Concierge Sales Service</h3>
+                    <p>A white-glove service where our team manages every aspect of your vehicle sale, from initial valuation to final transaction completion.</p>
                     <ul class="checklist">
-                        <li>I handle everything from start to finish</li>
-                        <li>Deal with all buyer inquiries</li>
-                        <li>Professional photography & listings</li>
-                        <li>You approve final price before sale</li>
-                        <li>Only pay when it's sold</li>
+                        <li>Complete transaction management</li>
+                        <li>Professional buyer vetting and communication</li>
+                        <li>Expert photography and market positioning</li>
+                        <li>Final approval authority remains with you</li>
+                        <li>Performance-based compensation structure</li>
                     </ul>
-                    <button class="btn btn-primary email-btn" data-service="Done-For-You Service">Book Service</button>
+                    <button class="btn btn-primary email-btn" data-service="Done-For-You Service">Schedule Consultation</button>
                 </div>
             </div>
         </div>
@@ -441,53 +506,53 @@
     <!-- DIY Steps -->
     <section class="diy-steps">
         <div class="container">
-            <h2 class="section-title">Complete DIY Walkthrough</h2>
+            <h2 class="section-title">Our Proven Methodology</h2>
             <div class="steps-grid">
                 <div class="step-card">
-                    <h4>🧽 Prep Your Car to Sell</h4>
+                    <h4>Vehicle Preparation & Enhancement</h4>
                     <ul class="step-features">
-                        <li>Deep clean checklist</li>
-                        <li>Quick fixes that increase value</li>
+                        <li>Professional detailing specifications</li>
+                        <li>Value-optimizing improvements analysis</li>
                     </ul>
                 </div>
 
                 <div class="step-card">
-                    <h4>💰 Price It Right</h4>
+                    <h4>Market Valuation & Pricing</h4>
                     <ul class="step-features">
-                        <li>KBB + Marketplace tool guide</li>
-                        <li>Price negotiation script</li>
+                        <li>Comprehensive market analysis tools</li>
+                        <li>Strategic negotiation frameworks</li>
                     </ul>
                 </div>
 
                 <div class="step-card">
-                    <h4>📸 Take Winning Photos</h4>
+                    <h4>Professional Documentation</h4>
                     <ul class="step-features">
-                        <li>5 best angles revealed</li>
-                        <li>Free photo editing app guide</li>
+                        <li>Expert photography standards</li>
+                        <li>Advanced editing techniques</li>
                     </ul>
                 </div>
 
                 <div class="step-card">
-                    <h4>✍️ Write a Listing That Converts</h4>
+                    <h4>Strategic Marketing Copy</h4>
                     <ul class="step-features">
-                        <li>Proven listing templates</li>
-                        <li>Words that boost trust</li>
+                        <li>Conversion-optimized listing templates</li>
+                        <li>Trust-building communication protocols</li>
                     </ul>
                 </div>
 
                 <div class="step-card">
-                    <h4>🌐 Post It Where It Sells</h4>
+                    <h4>Multi-Channel Distribution</h4>
                     <ul class="step-features">
-                        <li>Platform breakdown: FB, Craigslist, etc.</li>
-                        <li>Optimal posting timing strategy</li>
+                        <li>Platform-specific optimization strategies</li>
+                        <li>Timing and placement analytics</li>
                     </ul>
                 </div>
 
                 <div class="step-card">
-                    <h4>🤝 Close the Sale Safely</h4>
+                    <h4>Transaction Management</h4>
                     <ul class="step-features">
-                        <li>How to get paid without risk</li>
-                        <li>Title & bill of sale walkthrough</li>
+                        <li>Secure payment processing protocols</li>
+                        <li>Legal documentation and transfer procedures</li>
                     </ul>
                 </div>
             </div>
@@ -497,13 +562,13 @@
     <!-- Testimonials -->
     <section class="testimonials">
         <div class="container">
-            <h2 class="section-title">What People Say</h2>
+            <h2 class="section-title">Client Results</h2>
             <div class="testimonial-grid">
                 <div class="testimonial">
-                    <p>"I was offered $5500 for my car, but with his help, it sold for $9000. He charged me 7% which I thought was more than reasonable as I still made far more than I thought!"</p>
+                    <p>"The difference was remarkable. Initially offered $5,500 by a dealer, the professional service achieved a final sale price of $9,000. The 7% fee was more than justified by the substantial increase in net proceeds."</p>
                 </div>
                 <div class="testimonial">
-                    <p>"It took about 2 weeks to sell our car, but Josh was giving constant updates, was very helpful, and was very transparent. We ended up getting $3000 more for our car than what our local dealer offered for it"</p>
+                    <p>"The two-week sales process was managed with complete transparency and regular updates. The final transaction exceeded our dealer quote by $3,000, demonstrating the value of professional automotive sales expertise."</p>
                 </div>
             </div>
         </div>
@@ -512,17 +577,17 @@
     <!-- Pricing -->
     <section class="pricing" id="pricing">
         <div class="container">
-            <h2 class="section-title">Get Started Today</h2>
+            <h2 class="section-title">Investment Structure</h2>
             <div class="pricing-card">
-                <h3>Done-For-You Service</h3>
+                <h3>Concierge Sales Service</h3>
                 <div class="price">$0</div>
-                <p>Upfront Payment</p>
+                <p>Initial Investment</p>
                 <ul class="checklist" style="text-align: left; color: white;">
-                    <li>Flat fee or % of sale (you choose)</li>
-                    <li>No sale = no payment</li>
-                    <li>You approve final price</li>
+                    <li>Flexible fee structure options available</li>
+                    <li>Success-based compensation model</li>
+                    <li>Client maintains final transaction authority</li>
                 </ul>
-                <button class="btn btn-secondary email-btn" data-service="Done-For-You Service">Book Now</button>
+                <button class="btn btn-secondary email-btn" data-service="Done-For-You Service">Begin Consultation</button>
             </div>
         </div>
     </section>
@@ -531,18 +596,18 @@
     <div id="emailModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3 id="modalTitle">Get Started Today</h3>
-            <p id="modalDescription">Enter your email and I'll send you the details!</p>
+            <h3 id="modalTitle">Professional Consultation</h3>
+            <p id="modalDescription">Please provide your contact information to begin the process.</p>
             <form id="emailForm" action="https://formspree.io/f/mblkzdgk" method="POST">
                 <input type="hidden" id="serviceType" name="service_type" value="">
-                <input type="email" name="email" placeholder="Enter your email address" required>
-                <input type="text" name="name" placeholder="Your name (optional)">
-                <textarea name="message" placeholder="Tell me about your car or what you need help with (optional)" rows="3"></textarea>
-                <button type="submit" class="btn btn-primary">Send Me Details</button>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="text" name="name" placeholder="Full Name">
+                <textarea name="message" placeholder="Vehicle details or specific requirements" rows="4"></textarea>
+                <button type="submit" class="btn btn-primary">Submit Request</button>
             </form>
             <div id="thankYou" style="display: none;">
-                <h3>Thank You!</h3>
-                <p>I'll get back to you within 24 hours with all the details.</p>
+                <h3>Request Received</h3>
+                <p>We will contact you within 24 hours to discuss your requirements.</p>
             </div>
         </div>
     </div>
@@ -551,14 +616,14 @@
     <footer class="footer" id="contact">
         <div class="container">
             <div class="footer-content">
-                <h4>Ready to Get Started?</h4>
-                <p>Text me at <strong>(650)666-5045</strong></p>
-                <div style="margin-top: 2rem;">
-                    <button class="btn btn-primary email-btn" data-service="Free DIY Guide">Download Free Guide</button>
-                    <button class="btn btn-secondary email-btn" data-service="Premium Guide ($49)" style="margin-left: 1rem;">Get Premium ($49)</button>
+                <h4>Professional Consultation</h4>
+                <p>Direct line: <strong>(650) 666-5045</strong></p>
+                <div style="margin-top: 2.5rem;">
+                    <button class="btn btn-primary email-btn" data-service="Free DIY Guide">Request Information</button>
+                    <button class="btn btn-secondary email-btn" data-service="Premium Guide ($49)" style="margin-left: 1.5rem;">Premium Service</button>
                 </div>
             </div>
-            <p style="margin-top: 2rem; opacity: 0.7;">&copy; 2025 Incline Car Sales. All rights reserved.</p>
+            <p style="margin-top: 3rem; opacity: 0.7;">&copy; 2025 Incline Automotive Solutions. All rights reserved.</p>
         </div>
     </footer>
 
@@ -592,14 +657,14 @@
                     
                     // Customize modal content based on service
                     if (service && service.includes('DIY')) {
-                        modalTitle.textContent = 'Get Your DIY Car Selling Guide';
-                        modalDescription.textContent = 'Enter your email and I\'ll send you the complete guide with all my pro tips!';
+                        modalTitle.textContent = 'Professional Guide Request';
+                        modalDescription.textContent = 'Please provide your information to receive our comprehensive automotive sales guide.';
                     } else if (service && service.includes('Done-For-You')) {
-                        modalTitle.textContent = 'Let Me Sell Your Car';
-                        modalDescription.textContent = 'Tell me about your car and I\'ll handle everything for you!';
+                        modalTitle.textContent = 'Concierge Service Consultation';
+                        modalDescription.textContent = 'Please share your vehicle details to begin our professional sales process.';
                     } else {
-                        modalTitle.textContent = 'Get Started Today';
-                        modalDescription.textContent = 'Enter your details and I\'ll send you everything you need!';
+                        modalTitle.textContent = 'Professional Consultation';
+                        modalDescription.textContent = 'Please provide your contact information to discuss your requirements.';
                     }
                     
                     // Show modal
@@ -651,11 +716,11 @@
                             thankYou.style.display = 'block';
                             emailForm.reset();
                         } else {
-                            alert('Sorry, there was an error. Please try again or email me directly.');
+                            alert('Request could not be processed. Please contact us directly.');
                         }
                     }).catch(function(error) {
                         console.log('Form error:', error);
-                        alert('Sorry, there was an error. Please try again or email me directly.');
+                        alert('Request could not be processed. Please contact us directly.');
                     });
                 });
             }
@@ -679,7 +744,7 @@
             document.querySelectorAll('.option-card, .step-card, .testimonial').forEach(function(el) {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(20px)';
-                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
                 observer.observe(el);
             });
         });
