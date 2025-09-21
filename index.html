@@ -3,750 +3,600 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Incline: Premium Car Sales Solutions</title>
+    <title>Nibble - Triangle Cheesecake Bites</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: "Times New Roman", Times, serif;
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            color: #2c2c2c;
-            background: #f8f9fa;
+            color: #333;
+            background: linear-gradient(135deg, #f8fcff 0%, #e3f2fd 100%);
             overflow-x: hidden;
         }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
-        .hero {
-            min-height: 100vh;
+        
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(64, 123, 255, 0.1);
+            border-bottom: 2px solid rgba(64, 123, 255, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
             display: flex;
             align-items: center;
-            text-align: center;
-            color: #2c2c2c;
-            position: relative;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
-            color: #ffffff;
+            gap: 10px;
+            text-decoration: none;
+            color: #2c5aa0;
+            font-size: 1.8rem;
+            font-weight: bold;
         }
-
+        
+        .logo svg {
+            filter: drop-shadow(0 2px 8px rgba(64, 123, 255, 0.3));
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: #2c5aa0;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            background: linear-gradient(45deg, #64b5f6, #42a5f5);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 50%, #bbdefb 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.1);
-            z-index: 1;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-conic-gradient(
+                from 0deg at 50% 50%,
+                rgba(64, 123, 255, 0.03) 0deg 60deg,
+                transparent 60deg 120deg
+            );
+            animation: rotate 20s linear infinite;
         }
-
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         .hero-content {
             position: relative;
-            z-index: 2;
-            animation: fadeInUp 1.2s ease-out;
+            z-index: 1;
         }
-
+        
         .hero h1 {
-            font-size: clamp(4rem, 7vw, 6.5rem);
-            font-weight: 400;
+            font-size: 3.5rem;
+            color: #2c5aa0;
             margin-bottom: 1rem;
-            text-shadow: none;
-            letter-spacing: 0.15em;
-            font-family: "Times New Roman", Times, serif;
+            text-shadow: 0 4px 8px rgba(64, 123, 255, 0.1);
+            font-weight: 800;
         }
-
+        
         .hero .subtitle {
-            font-size: clamp(1.4rem, 2.5vw, 2rem);
-            font-weight: 300;
-            margin-bottom: 3rem;
-            opacity: 0.9;
-            font-style: normal;
-            letter-spacing: 0.05em;
-            color: #e8e8e8;
+            font-size: 1.3rem;
+            color: #1976d2;
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
-
-        .cta-buttons {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: #555;
+            line-height: 1.8;
         }
-
-        .btn {
-            padding: 18px 40px;
-            border: 2px solid #ffffff;
-            border-radius: 0;
-            font-size: 1rem;
-            font-weight: 400;
-            text-decoration: none;
+        
+        .cta-button {
             display: inline-block;
-            transition: all 0.4s ease;
-            cursor: pointer;
-            text-align: center;
-            min-width: 220px;
-            font-family: "Times New Roman", Times, serif;
-            letter-spacing: 0.1em;
+            background: linear-gradient(45deg, #64b5f6, #42a5f5);
+            color: white;
+            padding: 18px 36px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(66, 165, 245, 0.4);
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
-        .btn-primary {
-            background: #ffffff;
-            color: #2c2c2c;
-            box-shadow: none;
+        
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(66, 165, 245, 0.6);
         }
-
-        .btn-secondary {
-            background: transparent;
-            color: #ffffff;
-            border: 2px solid #ffffff;
+        
+        .section {
+            padding: 80px 0;
         }
-
-        .btn:hover {
-            transform: none;
-            box-shadow: none;
-        }
-
-        .btn-primary:hover {
-            background: #f0f0f0;
-            color: #1a1a1a;
-        }
-
-        .btn-secondary:hover {
-            background: #ffffff;
-            color: #2c2c2c;
-        }
-
-        .features {
-            background: #ffffff;
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .section-title {
+        
+        .section h2 {
             text-align: center;
             font-size: 2.8rem;
-            font-weight: 400;
-            margin-bottom: 4rem;
-            color: #2c2c2c;
-            font-family: "Times New Roman", Times, serif;
-            letter-spacing: 0.05em;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 4rem;
-            margin-bottom: 4rem;
-        }
-
-        .option-card {
-            background: #ffffff;
-            padding: 3rem;
-            border-radius: 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
-            border: 1px solid #e8e8e8;
-        }
-
-        .option-card:hover {
-            transform: translateY(-5px);
-            border-color: #2c2c2c;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-        }
-
-        .option-card h3 {
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-            color: #2c2c2c;
-            font-family: "Times New Roman", Times, serif;
-            letter-spacing: 0.05em;
-        }
-
-        .option-card p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            color: #666666;
-            line-height: 1.7;
-        }
-
-        .checklist {
-            list-style: none;
-            margin-bottom: 2.5rem;
-        }
-
-        .checklist li {
-            padding: 0.8rem 0;
-            position: relative;
-            padding-left: 2rem;
-            color: #555555;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .checklist li:last-child {
-            border-bottom: none;
-        }
-
-        .checklist li::before {
-            content: '●';
-            position: absolute;
-            left: 0;
-            color: #2c2c2c;
-            font-weight: normal;
-            font-size: 1rem;
-        }
-
-        .diy-steps {
-            background: #f8f9fa;
-            color: #2c2c2c;
-            padding: 100px 0;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-        }
-
-        .step-card {
-            background: #ffffff;
-            padding: 2.5rem;
-            border-radius: 0;
-            border: 1px solid #e8e8e8;
-            transition: transform 0.3s ease;
-        }
-
-        .step-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
-
-        .step-card h4 {
-            font-size: 1.4rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-            color: #2c2c2c;
-            font-family: "Times New Roman", Times, serif;
-            letter-spacing: 0.05em;
-        }
-
-        .step-features {
-            list-style: none;
-        }
-
-        .step-features li {
-            padding: 0.5rem 0;
-            color: #666666;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .step-features li:last-child {
-            border-bottom: none;
-        }
-
-        .testimonials {
-            background: #ffffff;
-            padding: 100px 0;
-        }
-
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 3rem;
-        }
-
-        .testimonial {
-            background: #f8f9fa;
-            padding: 3rem;
-            border-radius: 0;
-            box-shadow: none;
-            border-left: 3px solid #2c2c2c;
-        }
-
-        .testimonial p {
-            font-style: italic;
-            font-size: 1.1rem;
-            color: #555555;
-            margin-bottom: 1rem;
-            line-height: 1.7;
-        }
-
-        .pricing {
-            background: #2c2c2c;
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-        }
-
-        .pricing-card {
-            background: rgba(255,255,255,0.05);
-            padding: 4rem;
-            border-radius: 0;
-            border: 1px solid rgba(255,255,255,0.1);
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .pricing h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            font-family: "Times New Roman", Times, serif;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-        }
-
-        .price {
-            font-size: 3.5rem;
-            font-weight: 300;
-            margin: 2rem 0;
-            font-family: "Times New Roman", Times, serif;
-        }
-
-        .footer {
-            background: #1a1a1a;
-            color: white;
-            padding: 80px 0 40px;
-            text-align: center;
-        }
-
-        .footer-content {
             margin-bottom: 3rem;
+            color: #2c5aa0;
+            font-weight: 700;
         }
-
-        .footer h4 {
-            font-size: 1.6rem;
-            margin-bottom: 1.5rem;
-            font-family: "Times New Roman", Times, serif;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(3px);
-        }
-
-        .modal-content {
+        
+        .what-is-nibble {
             background: white;
-            margin: 5% auto;
-            padding: 3rem;
-            border-radius: 0;
-            width: 90%;
+            border-radius: 30px;
+            padding: 60px 40px;
+            margin: 40px 0;
+            box-shadow: 0 20px 60px rgba(64, 123, 255, 0.1);
+            text-align: center;
+        }
+        
+        .what-is-nibble h3 {
+            font-size: 2.2rem;
+            color: #2c5aa0;
+            margin-bottom: 2rem;
+        }
+        
+        .what-is-nibble p {
+            font-size: 1.3rem;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 25px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(64, 123, 255, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 25px 50px rgba(64, 123, 255, 0.15);
+            border-color: rgba(64, 123, 255, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .feature-card h3 {
+            color: #2c5aa0;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .product-section {
+            background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(64, 123, 255, 0.1);
             max-width: 500px;
-            position: relative;
-            animation: modalSlideIn 0.4s ease-out;
-            border: 1px solid #e8e8e8;
+            margin: 0 auto 3rem;
+            border: 3px solid #64b5f6;
         }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 24px;
-            font-weight: normal;
-            cursor: pointer;
-            position: absolute;
-            top: 20px;
-            right: 25px;
+        
+        .product-card .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
         }
-
-        .close:hover {
-            color: #2c2c2c;
+        
+        .product-card h3 {
+            font-size: 2rem;
+            color: #2c5aa0;
+            margin-bottom: 1rem;
         }
-
-        .modal-content h3 {
-            color: #2c2c2c;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            font-family: "Times New Roman", Times, serif;
-            font-weight: 400;
-            letter-spacing: 0.05em;
+        
+        .product-card .price {
+            font-size: 2.5rem;
+            color: #42a5f5;
+            font-weight: bold;
+            margin: 1rem 0;
         }
-
-        .modal-content p {
-            color: #666666;
+        
+        .product-card p {
+            color: #666;
             margin-bottom: 2rem;
             line-height: 1.6;
         }
-
-        .modal-content form {
+        
+        .coming-soon {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .coming-soon h3 {
+            font-size: 2rem;
+            color: #f57c00;
+            margin-bottom: 1rem;
+        }
+        
+        .coming-soon p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .coming-soon .flavors {
+            font-size: 3rem;
+            margin-top: 1rem;
+        }
+        
+        .contact-section {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1976d2 100%);
+            color: white;
+        }
+        
+        .contact-section h2 {
+            color: white;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .contact-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .contact-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .contact-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .contact-card a {
+            color: #bbdefb;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        
+        .contact-card a:hover {
+            color: white;
+        }
+        
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .newsletter {
+            background: white;
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .newsletter h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .newsletter-form {
             display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            max-width: 400px;
+            margin: 0 auto;
+            gap: 10px;
         }
-
-        .modal-content input,
-        .modal-content textarea {
-            padding: 15px;
-            border: 1px solid #e8e8e8;
-            border-radius: 0;
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
-            font-family: "Times New Roman", Times, serif;
-        }
-
-        .modal-content input:focus,
-        .modal-content textarea:focus {
             outline: none;
-            border-color: #2c2c2c;
+            transition: border-color 0.3s ease;
         }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        .newsletter-form input:focus {
+            border-color: #64b5f6;
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        .newsletter-form button {
+            background: linear-gradient(45deg, #64b5f6, #42a5f5);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-
-        /* Remove emojis and make it more professional */
-        .emoji {
-            display: none;
+        
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(66, 165, 245, 0.4);
         }
-
+        
+        footer {
+            background: #1a237e;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
         @media (max-width: 768px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-            
             .hero h1 {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
             
             .hero .subtitle {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input {
+                margin-bottom: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
-    <section class="hero">
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
+                        <path d="M75 25C75 19.77 70.23 15 65 15C41.12 15 23.31 33.31 23.31 57.19C23.31 62.42 27.58 66.69 32.81 66.69H65C70.23 66.69 75 62.42 75 57.19V25Z" fill="#2c5aa0"/>
+                        <path d="M75 25C75 19.77 70.23 15 65 15V25C65 30.23 69.77 35 75 35S85 30.23 85 25S80.23 15 75 15V25Z" fill="#ffffff"/>
+                        <circle cx="80" cy="30" r="2" fill="#64b5f6"/>
+                        <circle cx="80" cy="40" r="2" fill="#ff6b6b"/>
+                        <circle cx="80" cy="50" r="2" fill="#ffd93d"/>
+                    </svg>
+                    Nibble
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#product">Product</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>INCLINE</h1>
-                <p class="subtitle">Sell Your Car for What It's Worth</p>
-                <div class="cta-buttons">
-                    <button class="btn btn-primary email-btn" data-service="DIY Guide">Professional Guide</button>
-                    <button class="btn btn-secondary email-btn" data-service="Done-For-You Service">Full Service</button>
-                </div>
+                <h1>Nibble</h1>
+                <p class="subtitle">Triangle Cheesecake Bites</p>
+                <p>Frozen triangular cheesecake bites coated in 70% dark chocolate. Real ingredients, guilt-free indulgence.</p>
+                <a href="#product" class="cta-button">Order Now</a>
             </div>
         </div>
     </section>
 
-    <!-- How It Works -->
-    <section class="features">
+    <section class="section">
         <div class="container">
-            <h2 class="section-title">Our Services</h2>
-            <div class="options-grid">
-                <div class="option-card" id="diy">
-                    <h3>Professional Car Selling Guide</h3>
-                    <p>A comprehensive methodology developed through years of experience in automotive sales, providing you with institutional-grade knowledge and strategies.</p>
-                    <ul class="checklist">
-                        <li>Complete market analysis framework</li>
-                        <li>Professional negotiation strategies</li>
-                        <li>Multi-platform listing optimization</li>
-                        <li>Competitive pricing methodologies</li>
-                        <li>Risk mitigation and fraud prevention</li>
-                    </ul>
-                    <button class="btn btn-primary email-btn" data-service="DIY Guide">Request Guide</button>
+            <div class="what-is-nibble">
+                <h3>What is Nibble?</h3>
+                <p>Triangle-shaped frozen cheesecake bites coated in premium 70% dark chocolate. Made with clean ingredients and perfectly portioned for guilt-free indulgence.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🔺</span>
+                    <h3>Triangle Shape</h3>
+                    <p>Unique triangle design for perfect portion control</p>
                 </div>
-
-                <div class="option-card" id="done-for-you">
-                    <h3>Concierge Sales Service</h3>
-                    <p>A white-glove service where our team manages every aspect of your vehicle sale, from initial valuation to final transaction completion.</p>
-                    <ul class="checklist">
-                        <li>Complete transaction management</li>
-                        <li>Professional buyer vetting and communication</li>
-                        <li>Expert photography and market positioning</li>
-                        <li>Final approval authority remains with you</li>
-                        <li>Performance-based compensation structure</li>
-                    </ul>
-                    <button class="btn btn-primary email-btn" data-service="Done-For-You Service">Schedule Consultation</button>
+                <div class="feature-card">
+                    <span class="feature-icon">🍫</span>
+                    <h3>Dark Chocolate</h3>
+                    <p>Coated in premium 70% fair trade dark chocolate</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">❄️</span>
+                    <h3>Frozen Fresh</h3>
+                    <p>Frozen to maintain freshness and perfect texture</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- DIY Steps -->
-    <section class="diy-steps">
+    <section id="product" class="section product-section">
         <div class="container">
-            <h2 class="section-title">Our Proven Methodology</h2>
-            <div class="steps-grid">
-                <div class="step-card">
-                    <h4>Vehicle Preparation & Enhancement</h4>
-                    <ul class="step-features">
-                        <li>Professional detailing specifications</li>
-                        <li>Value-optimizing improvements analysis</li>
-                    </ul>
-                </div>
-
-                <div class="step-card">
-                    <h4>Market Valuation & Pricing</h4>
-                    <ul class="step-features">
-                        <li>Comprehensive market analysis tools</li>
-                        <li>Strategic negotiation frameworks</li>
-                    </ul>
-                </div>
-
-                <div class="step-card">
-                    <h4>Professional Documentation</h4>
-                    <ul class="step-features">
-                        <li>Expert photography standards</li>
-                        <li>Advanced editing techniques</li>
-                    </ul>
-                </div>
-
-                <div class="step-card">
-                    <h4>Strategic Marketing Copy</h4>
-                    <ul class="step-features">
-                        <li>Conversion-optimized listing templates</li>
-                        <li>Trust-building communication protocols</li>
-                    </ul>
-                </div>
-
-                <div class="step-card">
-                    <h4>Multi-Channel Distribution</h4>
-                    <ul class="step-features">
-                        <li>Platform-specific optimization strategies</li>
-                        <li>Timing and placement analytics</li>
-                    </ul>
-                </div>
-
-                <div class="step-card">
-                    <h4>Transaction Management</h4>
-                    <ul class="step-features">
-                        <li>Secure payment processing protocols</li>
-                        <li>Legal documentation and transfer procedures</li>
-                    </ul>
-                </div>
+            <h2>Available Now</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 3rem;">Original flavor is available now, with more exciting flavors coming soon.</p>
+            
+            <div class="product-card">
+                <span class="icon">🔺</span>
+                <h3>Original</h3>
+                <div class="price">$10.99</div>
+                <p>Classic cheesecake triangles coated in 70% dark chocolate. Made with organic cream cheese and Greek yogurt.</p>
+                <a href="#contact" class="cta-button">Order Now</a>
+            </div>
+            
+            <div class="coming-soon">
+                <h3>More Flavors Coming Soon</h3>
+                <p>We're working on Strawberry, Blueberry, and Mango flavors. Stay tuned!</p>
+                <div class="flavors">🍓🫐🥭</div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials">
+    <section id="contact" class="section contact-section">
         <div class="container">
-            <h2 class="section-title">Client Results</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial">
-                    <p>"The difference was remarkable. Initially offered $5,500 by a dealer, the professional service achieved a final sale price of $9,000. The 7% fee was more than justified by the substantial increase in net proceeds."</p>
-                </div>
-                <div class="testimonial">
-                    <p>"The two-week sales process was managed with complete transparency and regular updates. The final transaction exceeded our dealer quote by $3,000, demonstrating the value of professional automotive sales expertise."</p>
-                </div>
+            <h2>Get in Touch</h2>
+            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 3rem;">Ready to satisfy your sweet tooth? We'd love to hear from you!</p>
+            
+            <div class="contact-card" style="max-width: 500px; margin: 0 auto;">
+                <span class="icon">✉️</span>
+                <h3>Email Us</h3>
+                <p>Send us a message and we'll get back to you within 24 hours.</p>
+                <a href="mailto:nibblefoodsllc@gmail.com">nibblefoodsllc@gmail.com</a>
             </div>
         </div>
     </section>
 
-    <!-- Pricing -->
-    <section class="pricing" id="pricing">
+    <section class="newsletter">
         <div class="container">
-            <h2 class="section-title">Investment Structure</h2>
-            <div class="pricing-card">
-                <h3>Concierge Sales Service</h3>
-                <div class="price">$0</div>
-                <p>Initial Investment</p>
-                <ul class="checklist" style="text-align: left; color: white;">
-                    <li>Flexible fee structure options available</li>
-                    <li>Success-based compensation model</li>
-                    <li>Client maintains final transaction authority</li>
-                </ul>
-                <button class="btn btn-secondary email-btn" data-service="Done-For-You Service">Begin Consultation</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Email Modal -->
-    <div id="emailModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3 id="modalTitle">Professional Consultation</h3>
-            <p id="modalDescription">Please provide your contact information to begin the process.</p>
-            <form id="emailForm" action="https://formspree.io/f/mblkzdgk" method="POST">
-                <input type="hidden" id="serviceType" name="service_type" value="">
-                <input type="email" name="email" placeholder="Email Address" required>
-                <input type="text" name="name" placeholder="Full Name">
-                <textarea name="message" placeholder="Vehicle details or specific requirements" rows="4"></textarea>
-                <button type="submit" class="btn btn-primary">Submit Request</button>
+            <h2>Stay Sweet</h2>
+            <p>Subscribe to our newsletter for exclusive flavors, special offers, and sweet updates.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
             </form>
-            <div id="thankYou" style="display: none;">
-                <h3>Request Received</h3>
-                <p>We will contact you within 24 hours to discuss your requirements.</p>
-            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="footer" id="contact">
+    <footer>
         <div class="container">
-            <div class="footer-content">
-                <h4>Professional Consultation</h4>
-                <p>Direct line: <strong>(650) 666-5045</strong></p>
-                <div style="margin-top: 2.5rem;">
-                    <button class="btn btn-primary email-btn" data-service="Free DIY Guide">Request Information</button>
-                    <button class="btn btn-secondary email-btn" data-service="Premium Guide ($49)" style="margin-left: 1.5rem;">Premium Service</button>
-                </div>
-            </div>
-            <p style="margin-top: 3rem; opacity: 0.7;">&copy; 2025 Incline Automotive Solutions. All rights reserved.</p>
+            <p>&copy; 2025 Nibble. Real ingredients, guilt-free indulgence.</p>
         </div>
     </footer>
 
     <script>
-        // Wait for page to fully load
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Page loaded, initializing email modal...');
-            
-            // Get elements
-            const modal = document.getElementById('emailModal');
-            const emailButtons = document.querySelectorAll('.email-btn');
-            const closeBtn = document.querySelector('.close');
-            const emailForm = document.getElementById('emailForm');
-            const thankYou = document.getElementById('thankYou');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalDescription = document.getElementById('modalDescription');
-            const serviceTypeInput = document.getElementById('serviceType');
-
-            console.log('Found', emailButtons.length, 'email buttons');
-
-            // Add click handlers to all email buttons
-            emailButtons.forEach(function(button, index) {
-                console.log('Adding handler to button', index, button.textContent);
-                
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    console.log('Button clicked!', this.getAttribute('data-service'));
-                    
-                    const service = this.getAttribute('data-service');
-                    serviceTypeInput.value = service;
-                    
-                    // Customize modal content based on service
-                    if (service && service.includes('DIY')) {
-                        modalTitle.textContent = 'Professional Guide Request';
-                        modalDescription.textContent = 'Please provide your information to receive our comprehensive automotive sales guide.';
-                    } else if (service && service.includes('Done-For-You')) {
-                        modalTitle.textContent = 'Concierge Service Consultation';
-                        modalDescription.textContent = 'Please share your vehicle details to begin our professional sales process.';
-                    } else {
-                        modalTitle.textContent = 'Professional Consultation';
-                        modalDescription.textContent = 'Please provide your contact information to discuss your requirements.';
-                    }
-                    
-                    // Show modal
-                    modal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                    console.log('Modal should be visible now');
-                });
-            });
-
-            // Close modal when X is clicked
-            if (closeBtn) {
-                closeBtn.addEventListener('click', function() {
-                    console.log('Close button clicked');
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                    emailForm.style.display = 'block';
-                    thankYou.style.display = 'none';
-                });
-            }
-
-            // Close modal when clicking outside
-            window.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    console.log('Clicked outside modal');
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                    emailForm.style.display = 'block';
-                    thankYou.style.display = 'none';
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
+        });
 
-            // Handle form submission
-            if (emailForm) {
-                emailForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    console.log('Form submitted');
-                    
-                    // Submit to Formspree
-                    fetch(emailForm.action, {
-                        method: 'POST',
-                        body: new FormData(emailForm),
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    }).then(function(response) {
-                        console.log('Form response:', response);
-                        if (response.ok) {
-                            emailForm.style.display = 'none';
-                            thankYou.style.display = 'block';
-                            emailForm.reset();
-                        } else {
-                            alert('Request could not be processed. Please contact us directly.');
-                        }
-                    }).catch(function(error) {
-                        console.log('Form error:', error);
-                        alert('Request could not be processed. Please contact us directly.');
-                    });
-                });
-            }
+        // Newsletter form submission
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thanks for subscribing! We\'ll keep you updated on new flavors.');
+            this.reset();
+        });
 
-            // Add scroll-triggered animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-
-            // Observe all cards and sections
-            document.querySelectorAll('.option-card, .step-card, .testimonial').forEach(function(el) {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                observer.observe(el);
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
             });
+        }, observerOptions);
+
+        // Observe cards for animation
+        document.querySelectorAll('.feature-card, .product-card, .contact-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
         });
     </script>
 </body>
