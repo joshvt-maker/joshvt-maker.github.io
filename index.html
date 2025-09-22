@@ -1,603 +1,549 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nibble - Triangle Cheesecake Bites</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #f8fcff 0%, #e3f2fd 100%);
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(64, 123, 255, 0.1);
-            border-bottom: 2px solid rgba(64, 123, 255, 0.1);
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: #2c5aa0;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-        
-        .logo svg {
-            filter: drop-shadow(0 2px 8px rgba(64, 123, 255, 0.3));
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-        
-        nav a {
-            color: #2c5aa0;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-        }
-        
-        nav a:hover {
-            background: linear-gradient(45deg, #64b5f6, #42a5f5);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        .hero {
-            background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 50%, #bbdefb 100%);
-            padding: 120px 0 80px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-conic-gradient(
-                from 0deg at 50% 50%,
-                rgba(64, 123, 255, 0.03) 0deg 60deg,
-                transparent 60deg 120deg
-            );
-            animation: rotate 20s linear infinite;
-        }
-        
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            color: #2c5aa0;
-            margin-bottom: 1rem;
-            text-shadow: 0 4px 8px rgba(64, 123, 255, 0.1);
-            font-weight: 800;
-        }
-        
-        .hero .subtitle {
-            font-size: 1.3rem;
-            color: #1976d2;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            color: #555;
-            line-height: 1.8;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #64b5f6, #42a5f5);
-            color: white;
-            padding: 18px 36px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(66, 165, 245, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 35px rgba(66, 165, 245, 0.6);
-        }
-        
-        .section {
-            padding: 80px 0;
-        }
-        
-        .section h2 {
-            text-align: center;
-            font-size: 2.8rem;
-            margin-bottom: 3rem;
-            color: #2c5aa0;
-            font-weight: 700;
-        }
-        
-        .what-is-nibble {
-            background: white;
-            border-radius: 30px;
-            padding: 60px 40px;
-            margin: 40px 0;
-            box-shadow: 0 20px 60px rgba(64, 123, 255, 0.1);
-            text-align: center;
-        }
-        
-        .what-is-nibble h3 {
-            font-size: 2.2rem;
-            color: #2c5aa0;
-            margin-bottom: 2rem;
-        }
-        
-        .what-is-nibble p {
-            font-size: 1.3rem;
-            color: #555;
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .feature-card {
-            background: white;
-            border-radius: 25px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(64, 123, 255, 0.08);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px) rotate(1deg);
-            box-shadow: 0 25px 50px rgba(64, 123, 255, 0.15);
-            border-color: rgba(64, 123, 255, 0.2);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .feature-card h3 {
-            color: #2c5aa0;
-            margin-bottom: 1rem;
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
-        
-        .feature-card p {
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        .product-section {
-            background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
-        }
-        
-        .product-card {
-            background: white;
-            border-radius: 30px;
-            padding: 3rem 2rem;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(64, 123, 255, 0.1);
-            max-width: 500px;
-            margin: 0 auto 3rem;
-            border: 3px solid #64b5f6;
-        }
-        
-        .product-card .icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-        
-        .product-card h3 {
-            font-size: 2rem;
-            color: #2c5aa0;
-            margin-bottom: 1rem;
-        }
-        
-        .product-card .price {
-            font-size: 2.5rem;
-            color: #42a5f5;
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-        
-        .product-card p {
-            color: #666;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-        
-        .coming-soon {
-            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
-            border-radius: 25px;
-            padding: 3rem 2rem;
-            text-align: center;
-            margin: 3rem 0;
-        }
-        
-        .coming-soon h3 {
-            font-size: 2rem;
-            color: #f57c00;
-            margin-bottom: 1rem;
-        }
-        
-        .coming-soon p {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 1rem;
-        }
-        
-        .coming-soon .flavors {
-            font-size: 3rem;
-            margin-top: 1rem;
-        }
-        
-        .contact-section {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1976d2 100%);
-            color: white;
-        }
-        
-        .contact-section h2 {
-            color: white;
-        }
-        
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .contact-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .contact-card .icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .contact-card h3 {
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-        
-        .contact-card a {
-            color: #bbdefb;
-            text-decoration: none;
-            font-size: 1.1rem;
-        }
-        
-        .contact-card a:hover {
-            color: white;
-        }
-        
-        .hours-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .newsletter {
-            background: white;
-            text-align: center;
-            padding: 60px 0;
-        }
-        
-        .newsletter h2 {
-            margin-bottom: 1rem;
-        }
-        
-        .newsletter p {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 2rem;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .newsletter-form {
-            display: flex;
-            max-width: 400px;
-            margin: 0 auto;
-            gap: 10px;
-        }
-        
-        .newsletter-form input {
-            flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-        
-        .newsletter-form input:focus {
-            border-color: #64b5f6;
-        }
-        
-        .newsletter-form button {
-            background: linear-gradient(45deg, #64b5f6, #42a5f5);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .newsletter-form button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(66, 165, 245, 0.4);
-        }
-        
-        footer {
-            background: #1a237e;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero .subtitle {
-                font-size: 1.1rem;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .newsletter-form {
-                flex-direction: column;
-            }
-            
-            .newsletter-form input {
-                margin-bottom: 10px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">
-                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
-                        <path d="M75 25C75 19.77 70.23 15 65 15C41.12 15 23.31 33.31 23.31 57.19C23.31 62.42 27.58 66.69 32.81 66.69H65C70.23 66.69 75 62.42 75 57.19V25Z" fill="#2c5aa0"/>
-                        <path d="M75 25C75 19.77 70.23 15 65 15V25C65 30.23 69.77 35 75 35S85 30.23 85 25S80.23 15 75 15V25Z" fill="#ffffff"/>
-                        <circle cx="80" cy="30" r="2" fill="#64b5f6"/>
-                        <circle cx="80" cy="40" r="2" fill="#ff6b6b"/>
-                        <circle cx="80" cy="50" r="2" fill="#ffd93d"/>
-                    </svg>
-                    Nibble
-                </a>
-                <nav>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#product">Product</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Sprout, 
+  MessageCircle, 
+  TrendingUp, 
+  Users, 
+  MapPin, 
+  CloudRain,
+  Calculator,
+  Smartphone,
+  CheckCircle,
+  ArrowRight,
+  Star,
+  Shield,
+  Zap,
+  BarChart3
+} from "lucide-react";
 
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Nibble</h1>
-                <p class="subtitle">Triangle Cheesecake Bites</p>
-                <p>Frozen triangular cheesecake bites coated in 70% dark chocolate. Real ingredients, guilt-free indulgence.</p>
-                <a href="#product" class="cta-button">Order Now</a>
+export default function Home() {
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <nav className="bg-white border-b border-green-100 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center">
+                <Sprout className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">AgriCoach</h1>
+                <p className="text-xs text-green-600 font-medium">Smart Farming Intelligence</p>
+              </div>
             </div>
+            <div className="flex items-center gap-4">
+              <Button variant="ghost" className="text-gray-600 hover:text-green-600">
+                How It Works
+              </Button>
+              <Button variant="ghost" className="text-gray-600 hover:text-green-600">
+                Pricing
+              </Button>
+              <Button className="bg-green-600 hover:bg-green-700 text-white">
+                Get Started
+              </Button>
+            </div>
+          </div>
         </div>
-    </section>
+      </nav>
 
-    <section class="section">
-        <div class="container">
-            <div class="what-is-nibble">
-                <h3>What is Nibble?</h3>
-                <p>Triangle-shaped frozen cheesecake bites coated in premium 70% dark chocolate. Made with clean ingredients and perfectly portioned for guilt-free indulgence.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <span class="feature-icon">🔺</span>
-                    <h3>Triangle Shape</h3>
-                    <p>Unique triangle design for perfect portion control</p>
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-green-50 via-emerald-50 to-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <Badge className="bg-green-100 text-green-800 border-green-200 mb-6">
+                🌱 Powered by Community Data & AI
+              </Badge>
+              <h1 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                Your Personal
+                <span className="text-green-600"> Agronomy Expert</span>
+                <br />
+                in Your Pocket
+              </h1>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Get instant, data-driven recommendations for what to plant, when to fertilize, and how to maximize your harvest. Share your field data and reduce your subscription costs.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-lg px-8">
+                  Start Free Trial
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+                <Button variant="outline" size="lg" className="text-lg px-8 border-green-200 hover:bg-green-50">
+                  Watch Demo
+                </Button>
+              </div>
+              <div className="flex items-center gap-8 text-sm text-gray-500">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  <span>No credit card required</span>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-icon">🍫</span>
-                    <h3>Dark Chocolate</h3>
-                    <p>Coated in premium 70% fair trade dark chocolate</p>
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  <span>Works offline via SMS</span>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-icon">❄️</span>
-                    <h3>Frozen Fresh</h3>
-                    <p>Frozen to maintain freshness and perfect texture</p>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="bg-white rounded-3xl shadow-2xl p-8 transform rotate-3">
+                <div className="bg-green-50 rounded-2xl p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <MessageCircle className="w-8 h-8 text-green-600" />
+                    <div>
+                      <h3 className="font-semibold text-gray-900">AgriCoach Chat</h3>
+                      <p className="text-sm text-gray-500">Field 3 • Tomato Season</p>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="bg-gray-100 rounded-lg p-3 text-sm">
+                      "Can I plant tomatoes in Field 3 next week?"
+                    </div>
+                    <div className="bg-green-600 text-white rounded-lg p-3 text-sm">
+                      <p className="mb-2">✅ **Yes, ideal timing!** Your soil pH (5.8) and forecast temps (12-26°C) are perfect for tomatoes.</p>
+                      <p className="mb-2">**Recommendations:**</p>
+                      <p className="text-xs opacity-90">• Plant Sept 20-25 for best results<br/>• Apply 40-50 kg/ha N this week<br/>• Expected yield: 3.2-4.1 t/ha</p>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div className="absolute -bottom-6 -left-6 bg-orange-100 rounded-2xl p-4 shadow-lg">
+                <div className="flex items-center gap-2 text-sm">
+                  <TrendingUp className="w-4 h-4 text-orange-600" />
+                  <span className="font-medium text-orange-800">+180 data points this month</span>
+                </div>
+                <p className="text-xs text-orange-600 mt-1">$18 credit earned</p>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <section id="product" class="section product-section">
-        <div class="container">
-            <h2>Available Now</h2>
-            <p style="text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 3rem;">Original flavor is available now, with more exciting flavors coming soon.</p>
-            
-            <div class="product-card">
-                <span class="icon">🔺</span>
-                <h3>Original</h3>
-                <div class="price">$10.99</div>
-                <p>Classic cheesecake triangles coated in 70% dark chocolate. Made with organic cream cheese and Greek yogurt.</p>
-                <a href="#contact" class="cta-button">Order Now</a>
+      {/* Features Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Everything You Need to Farm Smarter
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Combine the wisdom of thousands of farmers with AI-powered insights, weather data, and personalized recommendations for your specific fields.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardHeader className="text-center pb-4">
+                <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <MessageCircle className="w-8 h-8 text-green-600" />
+                </div>
+                <CardTitle className="text-xl">AI Chat Assistant</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-gray-600">Ask questions about your crops, get instant answers based on your field data, weather, and community insights.</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardHeader className="text-center pb-4">
+                <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <CloudRain className="w-8 h-8 text-blue-600" />
+                </div>
+                <CardTitle className="text-xl">Weather Intelligence</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-gray-600">14-day forecasts, growing degree days, irrigation recommendations, and frost risk alerts for your exact location.</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardHeader className="text-center pb-4">
+                <div className="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Calculator className="w-8 h-8 text-orange-600" />
+                </div>
+                <CardTitle className="text-xl">Smart Calculators</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-gray-600">Fertilizer rates, irrigation timing, pest thresholds, and yield predictions tailored to your soil and conditions.</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardHeader className="text-center pb-4">
+                <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-purple-600" />
+                </div>
+                <CardTitle className="text-xl">Community Data</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-gray-600">Learn from thousands of farmers in similar conditions. Share data, earn credits, and grow together.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-20 bg-green-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              How AgriCoach Works
+            </h2>
+            <p className="text-xl text-gray-600">
+              Three simple steps to smarter farming
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-12">
+            <div className="text-center">
+              <div className="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <MapPin className="w-10 h-10 text-white" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">1. Add Your Fields</h3>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                Map your fields, record soil data, and tell us what you're growing. The more details you share, the better your recommendations.
+              </p>
             </div>
-            
-            <div class="coming-soon">
-                <h3>More Flavors Coming Soon</h3>
-                <p>We're working on Strawberry, Blueberry, and Mango flavors. Stay tuned!</p>
-                <div class="flavors">🍓🫐🥭</div>
+
+            <div className="text-center">
+              <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Smartphone className="w-10 h-10 text-white" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">2. Chat & Get Insights</h3>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                Ask questions via chat, SMS, or WhatsApp. Get instant recommendations for planting, fertilizing, pest control, and harvesting.
+              </p>
             </div>
-        </div>
-    </section>
 
-    <section id="contact" class="section contact-section">
-        <div class="container">
-            <h2>Get in Touch</h2>
-            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 3rem;">Ready to satisfy your sweet tooth? We'd love to hear from you!</p>
-            
-            <div class="contact-card" style="max-width: 500px; margin: 0 auto;">
-                <span class="icon">✉️</span>
-                <h3>Email Us</h3>
-                <p>Send us a message and we'll get back to you within 24 hours.</p>
-                <a href="mailto:nibblefoodsllc@gmail.com">nibblefoodsllc@gmail.com</a>
+            <div className="text-center">
+              <div className="w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <TrendingUp className="w-10 h-10 text-white" />
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">3. Share Data, Earn Credits</h3>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                Log your activities and yields. Every data point you share earns credits that reduce your subscription cost.
+              </p>
             </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <section class="newsletter">
-        <div class="container">
-            <h2>Stay Sweet</h2>
-            <p>Subscribe to our newsletter for exclusive flavors, special offers, and sweet updates.</p>
-            <form class="newsletter-form">
-                <input type="email" placeholder="Enter your email" required>
-                <button type="submit">Subscribe</button>
-            </form>
+      {/* Pricing */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Simple, Fair Pricing
+            </h2>
+            <p className="text-xl text-gray-600">
+              Pay with money or data - you choose. The more you contribute, the less you pay.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <Card className="border-2 border-gray-200">
+              <CardHeader className="text-center pb-4">
+                <CardTitle className="text-2xl">Free</CardTitle>
+                <div className="text-4xl font-bold text-gray-900 mt-2">$0</div>
+                <p className="text-gray-500">per month</p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>1 field</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>7-day weather forecast</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Basic chat questions</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Community insights</span>
+                  </div>
+                </div>
+                <Button variant="outline" className="w-full mt-6">
+                  Get Started
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-green-500 relative">
+              <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-green-500 text-white">
+                Most Popular
+              </Badge>
+              <CardHeader className="text-center pb-4">
+                <CardTitle className="text-2xl">Basic</CardTitle>
+                <div className="text-4xl font-bold text-gray-900 mt-2">$15</div>
+                <p className="text-gray-500">per month</p>
+                <p className="text-sm text-green-600 font-medium">Or pay with 1,500 data points</p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Up to 5 fields</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>14-day weather forecast</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Full AI chat access</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>PDF recommendations</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>SMS/WhatsApp alerts</span>
+                  </div>
+                </div>
+                <Button className="w-full mt-6 bg-green-600 hover:bg-green-700">
+                  Choose Basic
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-gray-200">
+              <CardHeader className="text-center pb-4">
+                <CardTitle className="text-2xl">Pro</CardTitle>
+                <div className="text-4xl font-bold text-gray-900 mt-2">$45</div>
+                <p className="text-gray-500">per month</p>
+                <p className="text-sm text-green-600 font-medium">Or pay with 4,500 data points</p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Unlimited fields</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Seasonal forecasts</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Priority support</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Market price alerts</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Advanced analytics</span>
+                  </div>
+                </div>
+                <Button variant="outline" className="w-full mt-6">
+                  Choose Pro
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-gray-600 text-lg">
+              💡 <strong>Data Credits:</strong> Every field record, yield report, and photo you share earns points that reduce your bill. High-quality data from underrepresented regions earns bonus credits.
+            </p>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Nibble. Real ingredients, guilt-free indulgence.</p>
+      {/* Social Proof */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Trusted by Farmers Worldwide
+            </h2>
+            <p className="text-xl text-gray-600">
+              Join thousands of farmers already improving their yields with AgriCoach
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-4 gap-8 mb-16">
+            <div className="text-center">
+              <div className="text-4xl font-bold text-green-600">12,000+</div>
+              <p className="text-gray-600 mt-2">Active Farmers</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-green-600">45,000</div>
+              <p className="text-gray-600 mt-2">Fields Mapped</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-green-600">2.3M</div>
+              <p className="text-gray-600 mt-2">Data Points Shared</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-green-600">18%</div>
+              <p className="text-gray-600 mt-2">Avg. Yield Increase</p>
+            </div>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            <Card className="bg-white">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-gray-600 mb-4">
+                  "AgriCoach saved me from a major pest outbreak. The early warning gave me time to act before it spread to my entire tomato crop."
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                    <span className="text-green-600 font-semibold">MK</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">Maria Kimani</p>
+                    <p className="text-sm text-gray-500">Tomato Farmer, Kenya</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-gray-600 mb-4">
+                  "The fertilizer recommendations increased my maize yield by 25% while actually reducing my input costs. Amazing!"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                    <span className="text-green-600 font-semibold">JN</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">João Nascimento</p>
+                    <p className="text-sm text-gray-500">Maize Farmer, Brazil</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-gray-600 mb-4">
+                  "I love that I can share my data and get credits. It feels like a true partnership with other farmers in my community."
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                    <span className="text-green-600 font-semibold">RP</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">Raj Patel</p>
+                    <p className="text-sm text-gray-500">Vegetable Farmer, India</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-    </footer>
+      </section>
 
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-green-600 to-emerald-600">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-white mb-6">
+            Ready to Farm Smarter?
+          </h2>
+          <p className="text-xl text-green-100 mb-8">
+            Join thousands of farmers using AI and community data to increase yields and reduce costs. Start your free trial today.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="bg-white text-green-600 hover:bg-gray-100 text-lg px-8">
+              Start Free Trial
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
+            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-green-600 text-lg px-8">
+              Schedule Demo
+            </Button>
+          </div>
+          <p className="text-green-100 text-sm mt-6">
+            No credit card required • SMS/WhatsApp support • Works offline
+          </p>
+        </div>
+      </section>
 
-        // Newsletter form submission
-        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thanks for subscribing! We\'ll keep you updated on new flavors.');
-            this.reset();
-        });
+      {/* Footer */}
+      <footer className="bg-gray-900 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center">
+                  <Sprout className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold text-white">AgriCoach</h1>
+                  <p className="text-xs text-green-400 font-medium">Smart Farming Intelligence</p>
+                </div>
+              </div>
+              <p className="text-gray-400 mb-4">
+                Empowering farmers with AI-driven insights and community knowledge to grow more with less.
+              </p>
+            </div>
 
-        // Add animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+            <div>
+              <h3 className="font-semibold text-white mb-4">Product</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-green-400">Features</a></li>
+                <li><a href="#" className="hover:text-green-400">Pricing</a></li>
+                <li><a href="#" className="hover:text-green-400">Mobile App</a></li>
+                <li><a href="#" className="hover:text-green-400">API</a></li>
+              </ul>
+            </div>
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+            <div>
+              <h3 className="font-semibold text-white mb-4">Support</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-green-400">Help Center</a></li>
+                <li><a href="#" className="hover:text-green-400">Contact Us</a></li>
+                <li><a href="#" className="hover:text-green-400">Community</a></li>
+                <li><a href="#" className="hover:text-green-400">Training</a></li>
+              </ul>
+            </div>
 
-        // Observe cards for animation
-        document.querySelectorAll('.feature-card, .product-card, .contact-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-            observer.observe(el);
-        });
-    </script>
-</body>
-</html>
+            <div>
+              <h3 className="font-semibold text-white mb-4">Company</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-green-400">About</a></li>
+                <li><a href="#" className="hover:text-green-400">Blog</a></li>
+                <li><a href="#" className="hover:text-green-400">Careers</a></li>
+                <li><a href="#" className="hover:text-green-400">Privacy</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
+            <p className="text-gray-400">© 2024 AgriCoach. All rights reserved.</p>
+            <div className="flex items-center gap-6 mt-4 sm:mt-0">
+              <a href="#" className="text-gray-400 hover:text-green-400">Privacy Policy</a>
+              <a href="#" className="text-gray-400 hover:text-green-400">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
