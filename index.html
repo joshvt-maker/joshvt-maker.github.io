@@ -1,549 +1,860 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Sprout, 
-  MessageCircle, 
-  TrendingUp, 
-  Users, 
-  MapPin, 
-  CloudRain,
-  Calculator,
-  Smartphone,
-  CheckCircle,
-  ArrowRight,
-  Star,
-  Shield,
-  Zap,
-  BarChart3
-} from "lucide-react";
+import React, { useState, useCallback } from 'react';
+import { ArrowUp, Award, MessageCircle, TrendingUp, User, Search, Plus, CheckCircle, Star, ThumbsUp } from 'lucide-react';
 
-export default function Home() {
+// Initial Data
+const initialUsers = [
+  {
+    id: 1,
+    name: "Sarah Chen",
+    title: "SaaS Founder",
+    credibilityScore: 847,
+    badges: ["Top Contributor", "Fundraising Expert", "Verified Founder"],
+    questionsAsked: 12,
+    answersGiven: 87,
+    upvotesReceived: 234,
+    bio: "Built and scaled 2 SaaS companies. Passionate about helping first-time founders navigate fundraising."
+  },
+  {
+    id: 2,
+    name: "Marcus Thompson",
+    title: "Serial Entrepreneur",
+    credibilityScore: 765,
+    badges: ["Marketing Guru", "Growth Hacker"],
+    questionsAsked: 8,
+    answersGiven: 56,
+    upvotesReceived: 178,
+    bio: "3x founder with successful exits. Love sharing marketing strategies that actually work."
+  },
+  {
+    id: 3,
+    name: "Alex Rivera",
+    title: "Tech Startup Founder",
+    credibilityScore: 692,
+    badges: ["Product Expert", "Early Adopter"],
+    questionsAsked: 15,
+    answersGiven: 43,
+    upvotesReceived: 145,
+    bio: "Building in the AI space. Always happy to discuss product development and tech stacks."
+  }
+];
+
+const initialQuestions = [
+  {
+    id: 1,
+    userId: 3,
+    category: "Fundraising",
+    title: "What metrics should I focus on before approaching VCs?",
+    content: "I'm preparing for my seed round and want to make sure I have all the right metrics in place. What are VCs actually looking at in 2025?",
+    upvotes: 24,
+    answerCount: 7,
+    timestamp: "2 hours ago",
+    answers: [
+      {
+        id: 1,
+        userId: 1,
+        content: "Focus on these key metrics: MRR growth rate (aim for 15%+ monthly), CAC payback period (under 12 months), net revenue retention (110%+), and burn multiple (under 1.5x). Also have your unit economics crystal clear - gross margin should be 70%+ for SaaS.",
+        upvotes: 18,
+        timestamp: "1 hour ago"
+      },
+      {
+        id: 2,
+        userId: 2,
+        content: "Sarah's metrics are spot on. I'd add: make sure you can articulate your TAM/SAM/SOM clearly, show evidence of product-market fit through customer testimonials and retention data, and have a clear go-to-market strategy. VCs want to see you understand your path to scale.",
+        upvotes: 12,
+        timestamp: "45 minutes ago"
+      }
+    ]
+  },
+  {
+    id: 2,
+    userId: 2,
+    category: "Marketing",
+    title: "Best strategies for B2B customer acquisition on a tight budget?",
+    content: "We're a bootstrapped B2B startup with limited marketing budget. What channels have you found most cost-effective for customer acquisition?",
+    upvotes: 18,
+    answerCount: 5,
+    timestamp: "5 hours ago",
+    answers: [
+      {
+        id: 3,
+        userId: 1,
+        content: "Content marketing and SEO are your best friends when bootstrapped. Create genuinely helpful content that solves your ICP's problems. Pair this with strategic LinkedIn outreach - not spammy sales messages, but actual value-add conversations. This combo got us our first 50 customers.",
+        upvotes: 15,
+        timestamp: "3 hours ago"
+      }
+    ]
+  },
+  {
+    id: 3,
+    userId: 1,
+    category: "Product",
+    title: "How do you balance feature requests vs. product vision?",
+    content: "Getting lots of customer feature requests that would take us in different directions. How do you stay true to your vision while keeping customers happy?",
+    upvotes: 31,
+    answerCount: 9,
+    timestamp: "1 day ago",
+    answers: [
+      {
+        id: 4,
+        userId: 3,
+        content: "I use a framework: if 3+ customers from your ICP ask for the same thing within a month, it's probably worth considering. But always ask 'why' they want it - often the underlying need can be solved in a way that aligns with your vision. Don't build everything everyone asks for.",
+        upvotes: 22,
+        timestamp: "18 hours ago"
+      },
+      {
+        id: 5,
+        userId: 2,
+        content: "Also remember: your most vocal customers aren't always representative of your broader market. Look at usage data, churn reasons, and talk to customers who left. That gives you a more complete picture of what to prioritize.",
+        upvotes: 16,
+        timestamp: "12 hours ago"
+      }
+    ]
+  }
+];
+
+const CredibilityGauge = ({ score }) => {
+  const percentage = Math.min((score / 1000) * 100, 100);
+  let color = 'text-red-500';
+  let label = 'Building';
+  
+  if (score >= 750) {
+    color = 'text-emerald-500';
+    label = 'Exceptional';
+  } else if (score >= 600) {
+    color = 'text-blue-500';
+    label = 'Strong';
+  } else if (score >= 400) {
+    color = 'text-amber-500';
+    label = 'Growing';
+  }
+
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="bg-white border-b border-green-100 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center">
-                <Sprout className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">AgriCoach</h1>
-                <p className="text-xs text-green-600 font-medium">Smart Farming Intelligence</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" className="text-gray-600 hover:text-green-600">
-                How It Works
-              </Button>
-              <Button variant="ghost" className="text-gray-600 hover:text-green-600">
-                Pricing
-              </Button>
-              <Button className="bg-green-600 hover:bg-green-700 text-white">
-                Get Started
-              </Button>
-            </div>
+    <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-xl border border-slate-700">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-sm font-medium text-slate-400">Credibility Score</h3>
+        <Award className={`w-5 h-5 ${color}`} />
+      </div>
+      <div className="text-4xl font-bold text-white mb-2">{score}</div>
+      <div className="text-sm text-slate-400 mb-4">{label}</div>
+      <div className="w-full bg-slate-700 rounded-full h-3 overflow-hidden">
+        <div 
+          className={`h-full bg-gradient-to-r ${
+            score >= 750 ? 'from-emerald-500 to-emerald-400' :
+            score >= 600 ? 'from-blue-500 to-blue-400' :
+            score >= 400 ? 'from-amber-500 to-amber-400' :
+            'from-red-500 to-red-400'
+          } transition-all duration-500`}
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
+      <div className="flex justify-between text-xs text-slate-500 mt-2">
+        <span>0</span>
+        <span>1000</span>
+      </div>
+    </div>
+  );
+};
+
+export default function ElevarePlatform() {
+  const [users, setUsers] = useState(initialUsers);
+  const [questions, setQuestions] = useState(initialQuestions);
+  const [currentView, setCurrentView] = useState('dashboard');
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [currentUser, setCurrentUser] = useState(users[0]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [newQuestionTitle, setNewQuestionTitle] = useState('');
+  const [newQuestionContent, setNewQuestionContent] = useState('');
+  const [newQuestionCategory, setNewQuestionCategory] = useState('General');
+  const [newAnswer, setNewAnswer] = useState('');
+  const [editingProfile, setEditingProfile] = useState(false);
+  const [profileForm, setProfileForm] = useState({});
+
+  const categories = ['All', 'Fundraising', 'Marketing', 'Product', 'Operations', 'Legal', 'Team Building', 'General'];
+
+  const upvoteQuestion = useCallback((questionId) => {
+    setQuestions(prev => prev.map(q => 
+      q.id === questionId ? { ...q, upvotes: q.upvotes + 1 } : q
+    ));
+    setUsers(prev => prev.map(u => {
+      const question = questions.find(q => q.id === questionId);
+      return u.id === question?.userId 
+        ? { ...u, upvotesReceived: u.upvotesReceived + 1, credibilityScore: u.credibilityScore + 2 }
+        : u;
+    }));
+  }, [questions]);
+
+  const upvoteAnswer = useCallback((questionId, answerId) => {
+    setQuestions(prev => prev.map(q => 
+      q.id === questionId 
+        ? {
+            ...q,
+            answers: q.answers.map(a => 
+              a.id === answerId ? { ...a, upvotes: a.upvotes + 1 } : a
+            )
+          }
+        : q
+    ));
+    setUsers(prev => prev.map(u => {
+      const question = questions.find(q => q.id === questionId);
+      const answer = question?.answers?.find(a => a.id === answerId);
+      return u.id === answer?.userId 
+        ? { ...u, upvotesReceived: u.upvotesReceived + 1, credibilityScore: u.credibilityScore + 5 }
+        : u;
+    }));
+  }, [questions]);
+
+  const submitQuestion = useCallback((e) => {
+    e.preventDefault();
+    if (!newQuestionTitle.trim() || !newQuestionContent.trim()) return;
+
+    const newQ = {
+      id: questions.length + 1,
+      userId: currentUser.id,
+      category: newQuestionCategory,
+      title: newQuestionTitle,
+      content: newQuestionContent,
+      upvotes: 0,
+      answerCount: 0,
+      timestamp: 'Just now',
+      answers: []
+    };
+
+    setQuestions(prev => [newQ, ...prev]);
+    setUsers(prev => prev.map(u => 
+      u.id === currentUser.id 
+        ? { ...u, questionsAsked: u.questionsAsked + 1, credibilityScore: u.credibilityScore + 3 }
+        : u
+    ));
+    setNewQuestionTitle('');
+    setNewQuestionContent('');
+    setNewQuestionCategory('General');
+    setCurrentView('dashboard');
+  }, [newQuestionTitle, newQuestionContent, newQuestionCategory, currentUser.id, questions.length]);
+
+  const submitAnswer = useCallback((e) => {
+    e.preventDefault();
+    if (!newAnswer.trim() || !selectedQuestion) return;
+
+    const newA = {
+      id: Date.now(),
+      userId: currentUser.id,
+      content: newAnswer,
+      upvotes: 0,
+      timestamp: 'Just now'
+    };
+
+    setQuestions(prev => prev.map(q => 
+      q.id === selectedQuestion.id 
+        ? { 
+            ...q, 
+            answers: [...(q.answers || []), newA],
+            answerCount: q.answerCount + 1
+          }
+        : q
+    ));
+
+    setUsers(prev => prev.map(u => 
+      u.id === currentUser.id 
+        ? { ...u, answersGiven: u.answersGiven + 1, credibilityScore: u.credibilityScore + 5 }
+        : u
+    ));
+
+    setNewAnswer('');
+    const updatedQuestion = questions.find(q => q.id === selectedQuestion.id);
+    setSelectedQuestion({ 
+      ...updatedQuestion, 
+      answers: [...(updatedQuestion.answers || []), newA],
+      answerCount: updatedQuestion.answerCount + 1
+    });
+  }, [newAnswer, selectedQuestion, currentUser.id, questions]);
+
+  const filteredQuestions = questions.filter(q => {
+    const matchesSearch = q.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         q.content.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'All' || q.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  const topContributors = [...users].sort((a, b) => b.credibilityScore - a.credibilityScore).slice(0, 3);
+
+  // Dashboard View
+  const DashboardView = () => (
+    <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="lg:col-span-2">
+          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-8 text-white mb-6">
+            <h2 className="text-3xl font-bold mb-2">Welcome to Elevare</h2>
+            <p className="text-indigo-100 text-lg">Where entrepreneurs build credibility and break through barriers together</p>
           </div>
-        </div>
-      </nav>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-green-50 via-emerald-50 to-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <Badge className="bg-green-100 text-green-800 border-green-200 mb-6">
-                🌱 Powered by Community Data & AI
-              </Badge>
-              <h1 className="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Your Personal
-                <span className="text-green-600"> Agronomy Expert</span>
-                <br />
-                in Your Pocket
-              </h1>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Get instant, data-driven recommendations for what to plant, when to fertilize, and how to maximize your harvest. Share your field data and reduce your subscription costs.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-lg px-8">
-                  Start Free Trial
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8 border-green-200 hover:bg-green-50">
-                  Watch Demo
-                </Button>
-              </div>
-              <div className="flex items-center gap-8 text-sm text-gray-500">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>No credit card required</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500" />
-                  <span>Works offline via SMS</span>
-                </div>
-              </div>
+          <div className="flex items-center gap-4 mb-6">
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search questions..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full bg-slate-800 border border-slate-700 rounded-lg pl-12 pr-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
             </div>
+            <button
+              onClick={() => setCurrentView('ask')}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-colors"
+            >
+              <Plus className="w-5 h-5" />
+              Ask Question
+            </button>
+          </div>
 
-            <div className="relative">
-              <div className="bg-white rounded-3xl shadow-2xl p-8 transform rotate-3">
-                <div className="bg-green-50 rounded-2xl p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <MessageCircle className="w-8 h-8 text-green-600" />
-                    <div>
-                      <h3 className="font-semibold text-gray-900">AgriCoach Chat</h3>
-                      <p className="text-sm text-gray-500">Field 3 • Tomato Season</p>
+          <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
+                  selectedCategory === cat
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          <div className="space-y-4">
+            {filteredQuestions.map(question => {
+              const author = users.find(u => u.id === question.userId);
+              return (
+                <div
+                  key={question.id}
+                  onClick={() => {
+                    setSelectedQuestion(question);
+                    setCurrentView('question');
+                  }}
+                  className="bg-slate-800 border border-slate-700 rounded-xl p-6 hover:border-indigo-500 transition-colors cursor-pointer"
+                >
+                  <div className="flex items-start gap-4">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        upvoteQuestion(question.id);
+                      }}
+                      className="flex flex-col items-center gap-1 px-3 py-2 bg-slate-900 rounded-lg hover:bg-indigo-600 transition-colors"
+                    >
+                      <ArrowUp className="w-5 h-5 text-slate-300" />
+                      <span className="text-sm font-bold text-white">{question.upvotes}</span>
+                    </button>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="px-3 py-1 bg-indigo-900 text-indigo-300 rounded-full text-xs font-medium">
+                          {question.category}
+                        </span>
+                        <span className="text-slate-500 text-sm">{question.timestamp}</span>
+                      </div>
+                      <h3 className="text-xl font-semibold text-white mb-2 hover:text-indigo-400 transition-colors">
+                        {question.title}
+                      </h3>
+                      <p className="text-slate-300 mb-4">{question.content}</p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4 text-sm text-slate-400">
+                          <div className="flex items-center gap-2">
+                            <User className="w-4 h-4" />
+                            <span>{author?.name}</span>
+                            <span className="text-amber-500">({author?.credibilityScore})</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <MessageCircle className="w-4 h-4" />
+                            <span>{question.answerCount} answers</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <div className="bg-gray-100 rounded-lg p-3 text-sm">
-                      "Can I plant tomatoes in Field 3 next week?"
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-indigo-400" />
+              Top Contributors
+            </h3>
+            <div className="space-y-4">
+              {topContributors.map((contributor, idx) => (
+                <div key={contributor.id} className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                    {idx + 1}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <div className="font-medium text-white">{contributor.name}</div>
+                      <CheckCircle className="w-4 h-4 text-indigo-400" />
                     </div>
-                    <div className="bg-green-600 text-white rounded-lg p-3 text-sm">
-                      <p className="mb-2">✅ **Yes, ideal timing!** Your soil pH (5.8) and forecast temps (12-26°C) are perfect for tomatoes.</p>
-                      <p className="mb-2">**Recommendations:**</p>
-                      <p className="text-xs opacity-90">• Plant Sept 20-25 for best results<br/>• Apply 40-50 kg/ha N this week<br/>• Expected yield: 3.2-4.1 t/ha</p>
+                    <div className="text-sm text-slate-400">{contributor.title}</div>
+                    <div className="flex items-center gap-2 mt-1">
+                      <Star className="w-4 h-4 text-amber-500" />
+                      <span className="text-sm font-bold text-amber-500">{contributor.credibilityScore}</span>
+                      <span className="text-xs text-slate-500">
+                        {contributor.answersGiven} answers
+                      </span>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="absolute -bottom-6 -left-6 bg-orange-100 rounded-2xl p-4 shadow-lg">
-                <div className="flex items-center gap-2 text-sm">
-                  <TrendingUp className="w-4 h-4 text-orange-600" />
-                  <span className="font-medium text-orange-800">+180 data points this month</span>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-white mb-4">How Credibility Works</h3>
+            <div className="space-y-3 text-sm text-slate-300">
+              <div className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <div className="font-medium text-white">Ask Questions: +3 points</div>
+                  <div className="text-slate-400">Share your challenges</div>
                 </div>
-                <p className="text-xs text-orange-600 mt-1">$18 credit earned</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <div className="font-medium text-white">Give Answers: +5 points</div>
+                  <div className="text-slate-400">Help fellow entrepreneurs</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-2">
+                <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <div className="font-medium text-white">Receive Upvotes: +2-5 points</div>
+                  <div className="text-slate-400">Quality content gets rewarded</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  );
 
-      {/* Features Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Everything You Need to Farm Smarter
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Combine the wisdom of thousands of farmers with AI-powered insights, weather data, and personalized recommendations for your specific fields.
-            </p>
+  // Ask Question View
+  const AskQuestionView = () => (
+    <div className="max-w-3xl mx-auto px-6 py-8">
+      <button
+        onClick={() => setCurrentView('dashboard')}
+        className="text-indigo-400 hover:text-indigo-300 mb-6 flex items-center gap-2"
+      >
+        ← Back to Dashboard
+      </button>
+      <div className="bg-slate-800 border border-slate-700 rounded-xl p-8">
+        <h2 className="text-2xl font-bold text-white mb-6">Ask Your Question</h2>
+        <form onSubmit={submitQuestion} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Category</label>
+            <select
+              value={newQuestionCategory}
+              onChange={(e) => setNewQuestionCategory(e.target.value)}
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              {categories.filter(c => c !== 'All').map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
           </div>
-
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center pb-4">
-                <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <MessageCircle className="w-8 h-8 text-green-600" />
-                </div>
-                <CardTitle className="text-xl">AI Chat Assistant</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-gray-600">Ask questions about your crops, get instant answers based on your field data, weather, and community insights.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center pb-4">
-                <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <CloudRain className="w-8 h-8 text-blue-600" />
-                </div>
-                <CardTitle className="text-xl">Weather Intelligence</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-gray-600">14-day forecasts, growing degree days, irrigation recommendations, and frost risk alerts for your exact location.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center pb-4">
-                <div className="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Calculator className="w-8 h-8 text-orange-600" />
-                </div>
-                <CardTitle className="text-xl">Smart Calculators</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-gray-600">Fertilizer rates, irrigation timing, pest thresholds, and yield predictions tailored to your soil and conditions.</p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center pb-4">
-                <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-purple-600" />
-                </div>
-                <CardTitle className="text-xl">Community Data</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-gray-600">Learn from thousands of farmers in similar conditions. Share data, earn credits, and grow together.</p>
-              </CardContent>
-            </Card>
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Question Title</label>
+            <input
+              type="text"
+              value={newQuestionTitle}
+              onChange={(e) => setNewQuestionTitle(e.target.value)}
+              placeholder="What would you like to know?"
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              required
+            />
           </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="py-20 bg-green-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              How AgriCoach Works
-            </h2>
-            <p className="text-xl text-gray-600">
-              Three simple steps to smarter farming
-            </p>
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Details</label>
+            <textarea
+              value={newQuestionContent}
+              onChange={(e) => setNewQuestionContent(e.target.value)}
+              placeholder="Provide more context about your question..."
+              rows={6}
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              required
+            />
           </div>
+          <button
+            type="submit"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg font-medium transition-colors"
+          >
+            Post Question
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 
-          <div className="grid lg:grid-cols-3 gap-12">
-            <div className="text-center">
-              <div className="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <MapPin className="w-10 h-10 text-white" />
+  // Question Detail View
+  const QuestionDetailView = () => {
+    if (!selectedQuestion) return null;
+    const author = users.find(u => u.id === selectedQuestion.userId);
+    
+    return (
+      <div className="max-w-4xl mx-auto px-6 py-8">
+        <button
+          onClick={() => setCurrentView('dashboard')}
+          className="text-indigo-400 hover:text-indigo-300 mb-6 flex items-center gap-2"
+        >
+          ← Back to Questions
+        </button>
+        
+        <div className="bg-slate-800 border border-slate-700 rounded-xl p-8 mb-6">
+          <div className="flex items-start gap-4 mb-6">
+            <button
+              onClick={() => upvoteQuestion(selectedQuestion.id)}
+              className="flex flex-col items-center gap-1 px-4 py-3 bg-slate-900 rounded-lg hover:bg-indigo-600 transition-colors"
+            >
+              <ArrowUp className="w-6 h-6 text-slate-300" />
+              <span className="text-lg font-bold text-white">{selectedQuestion.upvotes}</span>
+            </button>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="px-3 py-1 bg-indigo-900 text-indigo-300 rounded-full text-sm font-medium">
+                  {selectedQuestion.category}
+                </span>
+                <span className="text-slate-500 text-sm">{selectedQuestion.timestamp}</span>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">1. Add Your Fields</h3>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                Map your fields, record soil data, and tell us what you're growing. The more details you share, the better your recommendations.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Smartphone className="w-10 h-10 text-white" />
+              <h1 className="text-3xl font-bold text-white mb-4">{selectedQuestion.title}</h1>
+              <p className="text-slate-300 text-lg mb-4">{selectedQuestion.content}</p>
+              <div className="flex items-center gap-2 text-slate-400">
+                <User className="w-5 h-5" />
+                <span className="font-medium">{author?.name}</span>
+                <span className="text-amber-500">({author?.credibilityScore})</span>
+                <span className="mx-2">•</span>
+                <span>{author?.title}</span>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">2. Chat & Get Insights</h3>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                Ask questions via chat, SMS, or WhatsApp. Get instant recommendations for planting, fertilizing, pest control, and harvesting.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-20 h-20 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <TrendingUp className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">3. Share Data, Earn Credits</h3>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                Log your activities and yields. Every data point you share earns credits that reduce your subscription cost.
-              </p>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Pricing */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Simple, Fair Pricing
-            </h2>
-            <p className="text-xl text-gray-600">
-              Pay with money or data - you choose. The more you contribute, the less you pay.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="border-2 border-gray-200">
-              <CardHeader className="text-center pb-4">
-                <CardTitle className="text-2xl">Free</CardTitle>
-                <div className="text-4xl font-bold text-gray-900 mt-2">$0</div>
-                <p className="text-gray-500">per month</p>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>1 field</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>7-day weather forecast</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>Basic chat questions</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>Community insights</span>
-                  </div>
-                </div>
-                <Button variant="outline" className="w-full mt-6">
-                  Get Started
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="border-2 border-green-500 relative">
-              <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-green-500 text-white">
-                Most Popular
-              </Badge>
-              <CardHeader className="text-center pb-4">
-                <CardTitle className="text-2xl">Basic</CardTitle>
-                <div className="text-4xl font-bold text-gray-900 mt-2">$15</div>
-                <p className="text-gray-500">per month</p>
-                <p className="text-sm text-green-600 font-medium">Or pay with 1,500 data points</p>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>Up to 5 fields</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>14-day weather forecast</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>Full AI chat access</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>PDF recommendations</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>SMS/WhatsApp alerts</span>
-                  </div>
-                </div>
-                <Button className="w-full mt-6 bg-green-600 hover:bg-green-700">
-                  Choose Basic
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="border-2 border-gray-200">
-              <CardHeader className="text-center pb-4">
-                <CardTitle className="text-2xl">Pro</CardTitle>
-                <div className="text-4xl font-bold text-gray-900 mt-2">$45</div>
-                <p className="text-gray-500">per month</p>
-                <p className="text-sm text-green-600 font-medium">Or pay with 4,500 data points</p>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>Unlimited fields</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>Seasonal forecasts</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>Priority support</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>Market price alerts</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
-                    <span>Advanced analytics</span>
-                  </div>
-                </div>
-                <Button variant="outline" className="w-full mt-6">
-                  Choose Pro
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-gray-600 text-lg">
-              💡 <strong>Data Credits:</strong> Every field record, yield report, and photo you share earns points that reduce your bill. High-quality data from underrepresented regions earns bonus credits.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Trusted by Farmers Worldwide
-            </h2>
-            <p className="text-xl text-gray-600">
-              Join thousands of farmers already improving their yields with AgriCoach
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-4 gap-8 mb-16">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-green-600">12,000+</div>
-              <p className="text-gray-600 mt-2">Active Farmers</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-green-600">45,000</div>
-              <p className="text-gray-600 mt-2">Fields Mapped</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-green-600">2.3M</div>
-              <p className="text-gray-600 mt-2">Data Points Shared</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-green-600">18%</div>
-              <p className="text-gray-600 mt-2">Avg. Yield Increase</p>
-            </div>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            <Card className="bg-white">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-4">
-                  "AgriCoach saved me from a major pest outbreak. The early warning gave me time to act before it spread to my entire tomato crop."
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                    <span className="text-green-600 font-semibold">MK</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">Maria Kimani</p>
-                    <p className="text-sm text-gray-500">Tomato Farmer, Kenya</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-4">
-                  "The fertilizer recommendations increased my maize yield by 25% while actually reducing my input costs. Amazing!"
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                    <span className="text-green-600 font-semibold">JN</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">João Nascimento</p>
-                    <p className="text-sm text-gray-500">Maize Farmer, Brazil</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-4">
-                  "I love that I can share my data and get credits. It feels like a true partnership with other farmers in my community."
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                    <span className="text-green-600 font-semibold">RP</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">Raj Patel</p>
-                    <p className="text-sm text-gray-500">Vegetable Farmer, India</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-emerald-600">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-white mb-6">
-            Ready to Farm Smarter?
+        <div className="bg-slate-800 border border-slate-700 rounded-xl p-8 mb-6">
+          <h2 className="text-xl font-bold text-white mb-4">
+            {selectedQuestion.answerCount} {selectedQuestion.answerCount === 1 ? 'Answer' : 'Answers'}
           </h2>
-          <p className="text-xl text-green-100 mb-8">
-            Join thousands of farmers using AI and community data to increase yields and reduce costs. Start your free trial today.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-green-600 hover:bg-gray-100 text-lg px-8">
-              Start Free Trial
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-green-600 text-lg px-8">
-              Schedule Demo
-            </Button>
+          <div className="space-y-6">
+            {(selectedQuestion.answers || []).map(answer => {
+              const answerAuthor = users.find(u => u.id === answer.userId);
+              return (
+                <div key={answer.id} className="flex items-start gap-4 pb-6 border-b border-slate-700 last:border-0 last:pb-0">
+                  <button
+                    onClick={() => upvoteAnswer(selectedQuestion.id, answer.id)}
+                    className="flex flex-col items-center gap-1 px-3 py-2 bg-slate-900 rounded-lg hover:bg-indigo-600 transition-colors"
+                  >
+                    <ThumbsUp className="w-5 h-5 text-slate-300" />
+                    <span className="text-sm font-bold text-white">{answer.upvotes}</span>
+                  </button>
+                  <div className="flex-1">
+                    <p className="text-slate-300 mb-3 text-lg">{answer.content}</p>
+                    <div className="flex items-center gap-2 text-sm text-slate-400">
+                      <User className="w-4 h-4" />
+                      <span className="font-medium">{answerAuthor?.name}</span>
+                      <span className="text-amber-500">({answerAuthor?.credibilityScore})</span>
+                      <span className="mx-2">•</span>
+                      <span>{answer.timestamp}</span>
+                      {answerAuthor?.badges && answerAuthor.badges[0] && (
+                        <>
+                          <span className="mx-2">•</span>
+                          <Award className="w-4 h-4 text-indigo-400" />
+                          <span className="text-indigo-400">{answerAuthor.badges[0]}</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <p className="text-green-100 text-sm mt-6">
-            No credit card required • SMS/WhatsApp support • Works offline
-          </p>
         </div>
-      </section>
+
+        <div className="bg-slate-800 border border-slate-700 rounded-xl p-8">
+          <h3 className="text-xl font-bold text-white mb-4">Your Answer</h3>
+          <form onSubmit={submitAnswer}>
+            <textarea
+              value={newAnswer}
+              onChange={(e) => setNewAnswer(e.target.value)}
+              placeholder="Share your experience and insights..."
+              rows={6}
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            >
+              Post Answer
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  };
+
+  // Profile View
+  const ProfileView = () => {
+    const userQuestions = questions.filter(q => q.userId === currentUser.id);
+    const userAnswers = questions.flatMap(q => 
+      (q.answers || []).filter(a => a.userId === currentUser.id).map(a => ({ ...a, questionTitle: q.title }))
+    );
+
+    return (
+      <div className="max-w-4xl mx-auto px-6 py-8">
+        <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl p-8 mb-6">
+          <div className="flex items-start justify-between mb-6">
+            <div>
+              <h1 className="text-3xl font-bold text-white mb-2">{currentUser.name}</h1>
+              <p className="text-xl text-slate-300 mb-4">{currentUser.title}</p>
+              <p className="text-slate-400">{currentUser.bio}</p>
+            </div>
+            <button
+              onClick={() => {
+                setProfileForm(currentUser);
+                setEditingProfile(true);
+              }}
+              className="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition-colors"
+            >
+              Edit Profile
+            </button>
+          </div>
+
+          <div className="flex flex-wrap gap-2 mb-6">
+            {currentUser.badges.map(badge => (
+              <span key={badge} className="px-3 py-1 bg-indigo-900 text-indigo-300 rounded-full text-sm font-medium flex items-center gap-2">
+                <Award className="w-4 h-4" />
+                {badge}
+              </span>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            <div className="bg-slate-800 rounded-lg p-4">
+              <div className="text-2xl font-bold text-white mb-1">{currentUser.questionsAsked}</div>
+              <div className="text-sm text-slate-400">Questions Asked</div>
+            </div>
+            <div className="bg-slate-800 rounded-lg p-4">
+              <div className="text-2xl font-bold text-white mb-1">{currentUser.answersGiven}</div>
+              <div className="text-sm text-slate-400">Answers Given</div>
+            </div>
+            <div className="bg-slate-800 rounded-lg p-4">
+              <div className="text-2xl font-bold text-white mb-1">{currentUser.upvotesReceived}</div>
+              <div className="text-sm text-slate-400">Upvotes Received</div>
+            </div>
+          </div>
+
+          <CredibilityGauge score={currentUser.credibilityScore} />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <MessageCircle className="w-5 h-5 text-indigo-400" />
+              Recent Questions
+            </h3>
+            <div className="space-y-3">
+              {userQuestions.slice(0, 5).map(q => (
+                <div 
+                  key={q.id}
+                  onClick={() => {
+                    setSelectedQuestion(q);
+                    setCurrentView('question');
+                  }}
+                  className="p-3 bg-slate-900 rounded-lg hover:bg-slate-700 transition-colors cursor-pointer"
+                >
+                  <div className="font-medium text-white mb-1">{q.title}</div>
+                  <div className="flex items-center gap-3 text-sm text-slate-400">
+                    <span className="flex items-center gap-1">
+                      <ArrowUp className="w-3 h-3" />
+                      {q.upvotes}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <MessageCircle className="w-3 h-3" />
+                      {q.answerCount}
+                    </span>
+                    <span>{q.timestamp}</span>
+                  </div>
+                </div>
+              ))}
+              {userQuestions.length === 0 && (
+                <p className="text-slate-400 text-sm">No questions yet</p>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <ThumbsUp className="w-5 h-5 text-emerald-400" />
+              Recent Answers
+            </h3>
+            <div className="space-y-3">
+              {userAnswers.slice(0, 5).map(a => (
+                <div key={a.id} className="p-3 bg-slate-900 rounded-lg">
+                  <div className="text-sm text-slate-400 mb-1">On: {a.questionTitle}</div>
+                  <div className="text-white mb-2 line-clamp-2">{a.content}</div>
+                  <div className="flex items-center gap-3 text-sm text-slate-400">
+                    <span className="flex items-center gap-1">
+                      <ThumbsUp className="w-3 h-3" />
+                      {a.upvotes}
+                    </span>
+                    <span>{a.timestamp}</span>
+                  </div>
+                </div>
+              ))}
+              {userAnswers.length === 0 && (
+                <p className="text-slate-400 text-sm">No answers yet</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Edit Profile Modal
+  const EditProfileModal = () => {
+    if (!editingProfile) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div className="bg-slate-800 border border-slate-700 rounded-xl p-8 max-w-md w-full">
+          <h2 className="text-2xl font-bold text-white mb-6">Edit Profile</h2>
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            setCurrentUser(profileForm);
+            setUsers(prev => prev.map(u => u.id === profileForm.id ? profileForm : u));
+            setEditingProfile(false);
+          }} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Name</label>
+              <input
+                type="text"
+                value={profileForm.name}
+                onChange={(e) => setProfileForm({...profileForm, name: e.target.value})}
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Title</label>
+              <input
+                type="text"
+                value={profileForm.title}
+                onChange={(e) => setProfileForm({...profileForm, title: e.target.value})}
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Bio</label>
+              <textarea
+                value={profileForm.bio}
+                onChange={(e) => setProfileForm({...profileForm, bio: e.target.value})}
+                rows={4}
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg font-medium transition-colors"
+              >
+                Save Changes
+              </button>
+              <button
+                type="button"
+                onClick={() => setEditingProfile(false)}
+                className="flex-1 bg-slate-700 hover:bg-slate-600 text-white py-2 rounded-lg font-medium transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+      {/* Header */}
+      <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div 
+              onClick={() => setCurrentView('dashboard')}
+              className="flex items-center gap-3 cursor-pointer"
+            >
+              <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-white" />
+              </div>
+              <span className="text-2xl font-bold text-white">Elevare</span>
+            </div>
+            
+            <nav className="flex items-center gap-6">
+              <button
+                onClick={() => setCurrentView('dashboard')}
+                className={`font-medium transition-colors ${
+                  currentView === 'dashboard' 
+                    ? 'text-indigo-400' 
+                    : 'text-slate-300 hover:text-white'
+                }`}
+              >
+                Dashboard
+              </button>
+              <button
+                onClick={() => setCurrentView('profile')}
+                className={`font-medium transition-colors ${
+                  currentView === 'profile' 
+                    ? 'text-indigo-400' 
+                    : 'text-slate-300 hover:text-white'
+                }`}
+              >
+                Profile
+              </button>
+              <div className="flex items-center gap-2 pl-4 border-l border-slate-700">
+                <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                  {currentUser.name.split(' ').map(n => n[0]).join('')}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Star className="w-4 h-4 text-amber-500" />
+                  <span className="font-bold text-amber-500">{currentUser.credibilityScore}</span>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main>
+        {currentView === 'dashboard' && <DashboardView />}
+        {currentView === 'ask' && <AskQuestionView />}
+        {currentView === 'question' && <QuestionDetailView />}
+        {currentView === 'profile' && <ProfileView />}
+      </main>
+
+      {/* Edit Profile Modal */}
+      <EditProfileModal />
 
       {/* Footer */}
-      <footer className="bg-gray-900 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center">
-                  <Sprout className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-white">AgriCoach</h1>
-                  <p className="text-xs text-green-400 font-medium">Smart Farming Intelligence</p>
-                </div>
-              </div>
-              <p className="text-gray-400 mb-4">
-                Empowering farmers with AI-driven insights and community knowledge to grow more with less.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-white mb-4">Product</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-green-400">Features</a></li>
-                <li><a href="#" className="hover:text-green-400">Pricing</a></li>
-                <li><a href="#" className="hover:text-green-400">Mobile App</a></li>
-                <li><a href="#" className="hover:text-green-400">API</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-white mb-4">Support</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-green-400">Help Center</a></li>
-                <li><a href="#" className="hover:text-green-400">Contact Us</a></li>
-                <li><a href="#" className="hover:text-green-400">Community</a></li>
-                <li><a href="#" className="hover:text-green-400">Training</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-white mb-4">Company</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-green-400">About</a></li>
-                <li><a href="#" className="hover:text-green-400">Blog</a></li>
-                <li><a href="#" className="hover:text-green-400">Careers</a></li>
-                <li><a href="#" className="hover:text-green-400">Privacy</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
-            <p className="text-gray-400">© 2024 AgriCoach. All rights reserved.</p>
-            <div className="flex items-center gap-6 mt-4 sm:mt-0">
-              <a href="#" className="text-gray-400 hover:text-green-400">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-green-400">Terms of Service</a>
-            </div>
+      <footer className="border-t border-slate-800 bg-slate-900/50 mt-16">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="text-center text-slate-400">
+            <p className="mb-2">Built with ❤️ for entrepreneurs breaking barriers</p>
+            <p className="text-sm">Elevare - Where credibility matters, not demographics</p>
           </div>
         </div>
       </footer>
     </div>
   );
-} 
+}
